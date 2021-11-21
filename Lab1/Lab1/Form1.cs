@@ -117,7 +117,6 @@ namespace Lab1
             {
                 e.Graphics.DrawLine(pen, pointsArray[i], pointsArray[i - 1]);
             }
-            e.Graphics.DrawLine(pen, pointsArray[0], pointsArray[pointsArray.Length - 1]);
         }
 
         private void DrawAxis(object sender, PaintEventArgs e)
@@ -223,6 +222,7 @@ namespace Lab1
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             DrawFunctionUpdate(sender, e);
         }
 
