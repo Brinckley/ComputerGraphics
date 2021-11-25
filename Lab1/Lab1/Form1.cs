@@ -12,28 +12,32 @@ using System.Windows.Forms;
 
 namespace Lab1
 {
+    //solve:
+    // 1. jumping line
+    // 2. write my own matrix operations
+    // 3. form resize operation fix
 
     public partial class Form1 : Form
     {
-        private float accuracy = 0.01f; //точность
-        private float a = 59.0f; //параметр а
-        private float b = 60.0f; //параметр В
+        private float accuracy = 0.01f; //approximation
+        private float a = 59.0f; //parameter а
+        private float b = 60.0f; //parameter В
         
         private List<PointF> points;
         private PointF[] pointsArray;
 
-        private float scaleX = 0; //параметр сжатия по оси Ч
-        private float scaleY = 0; //параметр сжатия по оси Y
+        private float scaleX = 0; //X compression
+        private float scaleY = 0; //Y compression
 
-        private float dx;
-        private float dy;
+        private float dx; //delta x
+        private float dy; //delta y
         private float gSizeX;
         private float gSizeY;
 
-        private float formSizeX; //параметры изменения величины формы
+        private float formSizeX; //form resize parameters
         private float formSizeY;
 
-        private float rotateAngle = 0; //угол поворота
+        private float rotateAngle = 0; //angel of graphic rotation
 
         public Form1()
         {
@@ -73,12 +77,12 @@ namespace Lab1
             pictureBox1.Refresh();
         }
 
-        private void UpdatePanelSize() //новое значение размеров формы
+        private void UpdatePanelSize() //new value of form size
         {
             formSizeX = pictureBox1.Width;
             formSizeY = pictureBox1.Height;
         }
-        private void UpdateDeltas() //новое значения величины смещения по осям
+        private void UpdateDeltas() //new value of axis offset
         {//
             gSizeX = formSizeX / 2 + dx;
             gSizeY = formSizeY / 2 + dy;
@@ -156,14 +160,14 @@ namespace Lab1
         }
 
         private void numericA_ValueChanged(object sender, EventArgs e)
-        { //изменение параметра а
+        { //upd value а
             a = (float)numericA.Value;
             pictureBox1.Refresh();
             Invalidate();
         }
         
         private void numericB_ValueChanged(object sender, EventArgs e)
-        { //изменение параметра В
+        { //upd value В
             b = (float)numericB.Value;
             pictureBox1.Refresh();
             Invalidate();
@@ -177,35 +181,35 @@ namespace Lab1
         }
 
         private void numericXScale_ValueChanged(object sender, EventArgs e)
-        { //изменение масштаба по Х
+        { //upd Х scale
             scaleX = (float) numericXScale.Value;
             pictureBox1.Refresh();
             Invalidate();
         }
 
         private void numericYScale_ValueChanged(object sender, EventArgs e)
-        {//изменение масштаба по Y
+        {//upd Y scale
             scaleY = (float) numericYScale.Value;
             pictureBox1.Refresh();
             Invalidate();
         }
 
         private void numericUpdateX_ValueChanged(object sender, EventArgs e)
-        {//сдвиг по Х
+        {//Х offset
             dx = (float) numericUpdateX.Value;
             pictureBox1.Refresh();
             Invalidate();
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {//сдвиг по Y
+        {//Y offset
             dy = (float) numericUpDown1.Value;
             pictureBox1.Refresh();
             Invalidate();
         }
 
         private void numericAngle_ValueChanged(object sender, EventArgs e)
-        {//изменение угла вращения
+        {//upd rotation
             if (numericAngle.Value == (decimal) -0.1)
             {
                 numericAngle.Value = (decimal) 359.9;
