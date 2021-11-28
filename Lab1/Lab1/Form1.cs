@@ -13,9 +13,9 @@ using System.Windows.Forms;
 namespace Lab1
 {
     //solve:
-    // 1. jumping line
-    // 2. write my own matrix operations
-    // 3. form resize operation fix
+    // 1. jumping line                          (fixed)
+    // 2. write my own matrix operations        ()
+    // 3. form resize operation fix             ()
 
     public partial class Form1 : Form
     {
@@ -31,8 +31,11 @@ namespace Lab1
 
         private float dx; //delta x
         private float dy; //delta y
-        private float gSizeX;
-        private float gSizeY;
+        private float gSizeX; //compression x
+        private float gSizeY; //compression y
+
+        private float diffGraphX; //x size of graph 
+        private float diffGraphY; //y size of graph
 
         private float formSizeX; //form resize parameters
         private float formSizeY;
@@ -76,11 +79,40 @@ namespace Lab1
             
             pictureBox1.Refresh();
         }
-
+        
+        private float GetXSize(PointF[] points){
+            float maxX = float.MinValue;
+            float minX = float.MaxValue;
+            foreach (PointF point in points){
+                minX = Math.Min(minX, point.X);
+                maxX = Math.Max(maxX, point.X);
+            }
+            return maxX-minX;
+        }
+        private float GetYSize(PointF[] points){
+            float maxY = float.MinValue;
+            float minY = float.MaxValue;
+            foreach (PointF point in points){
+                minY = Math.Min(minY, point.X);
+                maxY = Math.Max(maxY, point.X);
+            }
+            return maxY-minY;
+        }
+        
+        
         private void UpdatePanelSize() //new value of form size
         {
+            var oldX = formSizeX;
+            var oldY = formSizeY;
             formSizeX = pictureBox1.Width;
             formSizeY = pictureBox1.Height;
+
+            double Xprop = formSizeX / oldX;
+            double Yprop = formSizeY / oldY;
+
+            scaleX *= (float) Xprop;
+            scaleY *= (float) Yprop;
+
         }
         private void UpdateDeltas() //new value of axis offset
         {//
@@ -92,8 +124,8 @@ namespace Lab1
         {
             points = new List<PointF>();
             //y^2 = x^3 / (a - x)        0 < x <= B
-            float border = Math.Min(a, b) - accuracy;
-
+            float border = Math.Min(a, b) - 0.001f;
+            
             for (float i = border; i >= 0; i -= accuracy)
             {
                 float y = (float)Math.Sqrt(Math.Pow(i, 3) / (a - i));
@@ -104,8 +136,15 @@ namespace Lab1
                 float y = (float)Math.Sqrt(Math.Pow(i, 3) / (a - i));
                 points.Add(new PointF(i, -y));
             }
+            points.Add(new PointF( border, -(float)Math.Sqrt(Math.Pow(border, 3) / (a - border))));
             
             pointsArray = points.ToArray();
+/*
+            MyMatrix transformMatrix = new MyMatrix();
+            transformMatrix.Scale(scaleX, scaleY);
+            transformMatrix.Rotate(rotateAngle);
+            transformMatrix.Translate(gSizeX, gSizeY);
+            transformMatrix.TransformPoints(ref pointsArray);*/
             
             Matrix transformMatrix = new Matrix();
             transformMatrix.Scale(scaleX, scaleY, MatrixOrder.Append);
@@ -128,7 +167,12 @@ namespace Lab1
             Matrix transformMatrix = new Matrix();
             transformMatrix.Scale(formSizeX, formSizeY, MatrixOrder.Append);
             transformMatrix.Rotate(rotateAngle, MatrixOrder.Append);
-            transformMatrix.Translate(gSizeX, gSizeY, MatrixOrder.Append);
+            transformMatrix.Translate(gSizeX, gSizeY, MatrixOrder.Append);/*
+            MyMatrix transformMatrix = new MyMatrix();
+            transformMatrix.Scale(scaleX, scaleY);
+            transformMatrix.Rotate(rotateAngle);
+            transformMatrix.Translate(gSizeX, gSizeY);
+            transformMatrix.TransformPoints( pointsArray);*/
             
             List<PointF> xAxisList = new List<PointF>();
             xAxisList.Add(new PointF(1, 0));
