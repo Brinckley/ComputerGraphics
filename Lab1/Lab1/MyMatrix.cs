@@ -13,8 +13,8 @@ namespace Lab1
         
         public MyMatrix()
         {
-            mx = 0;
-            my = 0;
+            mx = 1;
+            my = 1;
         }
 
         public MyMatrix(double mx, double my)
@@ -29,7 +29,7 @@ namespace Lab1
             my *= py;
         }
 
-        public void Rotate(double angle, double offset)
+        public void Rotate(double angle)
         {
             double tmpX = mx;
             double tmpY = my;
