@@ -14,15 +14,15 @@ namespace Lab1
 {
     //solve:
     // 1. jumping line                         --- (fixed)
-    // 2. write my own matrix operations      
-    // 3. form resize operation fix
+    // 2. write my own matrix operations       --- (fixed)
+    // 3. form resize operation fix            --- (fixed)
 
     public partial class Form1 : Form
     {
         private float accuracy = 0.01f; //approximation
         private float a = 59.0f; //parameter а
         private float b = 60.0f; //parameter В
-        
+
         private List<PointF> points;
         private PointF[] pointsArray;
 
@@ -33,6 +33,11 @@ namespace Lab1
         private float dy; //delta y
         private float gSizeX;
         private float gSizeY;
+
+        private float globalScaleX;
+        private float globalScaleY;
+        private float oldWidth;
+        private float oldHeight;
 
         private float formSizeX; //form resize parameters
         private float formSizeY;
@@ -45,15 +50,18 @@ namespace Lab1
             scaleX = 1;
             scaleY = 1;
             rotateAngle = 0;
-            
+
+            globalScaleX = 1;
+            globalScaleY = 1;
             dx = 0;
             dy = 0;
-            UpdateDeltas();
             this.pictureBox1.MouseWheel += Zoom_Wheel;
             numericUpdateX.Maximum = pictureBox1.Width / 2;
             numericUpDown1.Maximum = pictureBox1.Height / 2;
             numericUpdateX.Minimum = -pictureBox1.Width / 2;
             numericUpDown1.Minimum = -pictureBox1.Height / 2;
+            oldHeight = pictureBox1.Height;
+            oldWidth = pictureBox1.Width;
         }
 
         private void Zoom_Wheel(object sender, MouseEventArgs e)
@@ -71,9 +79,10 @@ namespace Lab1
                     scaleY -= 0.01f;
                 }
             }
+
             numericXScale.Value = (decimal) scaleX;
             numericYScale.Value = (decimal) scaleY;
-            
+
             pictureBox1.Refresh();
         }
 
@@ -81,11 +90,6 @@ namespace Lab1
         {
             formSizeX = pictureBox1.Width;
             formSizeY = pictureBox1.Height;
-        }
-        private void UpdateDeltas() //new value of axis offset
-        {//
-            gSizeX = formSizeX / 2 + dx;
-            gSizeY = formSizeY / 2 + dy;
         }
 
         private void BuildGraph()
@@ -96,22 +100,38 @@ namespace Lab1
 
             for (float i = border; i >= 0; i -= accuracy)
             {
-                float y = (float)Math.Sqrt(Math.Pow(i, 3) / (a - i));
+                float y = (float) Math.Sqrt(Math.Pow(i, 3) / (a - i));
                 points.Add(new PointF(i, y));
             }
             for (float i = 0; i < border; i += accuracy)
             {
-                float y = (float)Math.Sqrt(Math.Pow(i, 3) / (a - i));
+                float y = (float) Math.Sqrt(Math.Pow(i, 3) / (a - i));
                 points.Add(new PointF(i, -y));
             }
-            
+            points.Add(new PointF( border, -(float)Math.Sqrt(Math.Pow(border, 3) / (a - border))));
+
             pointsArray = points.ToArray();
-            
-            Matrix transformMatrix = new Matrix();
-            transformMatrix.Scale(scaleX, scaleY, MatrixOrder.Append);
-            transformMatrix.Rotate(rotateAngle, MatrixOrder.Append);
-            transformMatrix.Translate(gSizeX, gSizeY, MatrixOrder.Append);
-            transformMatrix.TransformPoints(pointsArray);
+            for (int i = 0; i < pointsArray.Length; ++i)
+            {
+                float oldX = pointsArray[i].X;
+                float oldY = pointsArray[i].Y;
+                pointsArray[i].X = oldX * (float)Math.Cos(rotateAngle * (Math.PI / 180)) - oldY * (float)Math.Sin(rotateAngle * (Math.PI / 180));
+                pointsArray[i].Y = oldX * (float)Math.Sin(rotateAngle * (Math.PI / 180)) + oldY * (float)Math.Cos(rotateAngle * (Math.PI / 180));
+            }
+            ScaleTranslateGraph();
+        }
+
+        private void ScaleTranslateGraph()
+        { 
+            float offsetX = pictureBox1.Width / 2 + dx;
+            float offsetY = pictureBox1.Height / 2 + dy;
+            for (int i = 0; i < points.Count; ++i)
+            {
+                pointsArray[i].X *= (scaleX * globalScaleX);
+                pointsArray[i].Y *= (scaleY * globalScaleY);
+                pointsArray[i].X += offsetX;
+                pointsArray[i].Y += offsetY;
+            }
         }
 
         private void DrawGraph(object sender, PaintEventArgs e)
@@ -124,24 +144,33 @@ namespace Lab1
         }
 
         private void DrawAxis(object sender, PaintEventArgs e)
-        { 
-            Matrix transformMatrix = new Matrix();
-            transformMatrix.Scale(formSizeX, formSizeY, MatrixOrder.Append);
-            transformMatrix.Rotate(rotateAngle, MatrixOrder.Append);
-            transformMatrix.Translate(gSizeX, gSizeY, MatrixOrder.Append);
+        {
             
+            float offsetX = pictureBox1.Width / 2 + dx;
+            float offsetY = pictureBox1.Height / 2 + dy;
+
             List<PointF> xAxisList = new List<PointF>();
             xAxisList.Add(new PointF(1, 0));
             xAxisList.Add(new PointF(-1, 0));
             PointF[] xAxisArray = xAxisList.ToArray();
-            transformMatrix.TransformPoints(xAxisArray);
-            
+
             List<PointF> yAxisList = new List<PointF>();
             yAxisList.Add(new PointF(0, 1));
             yAxisList.Add(new PointF(0, -1));
             PointF[] yAxisArray = yAxisList.ToArray();
-            transformMatrix.TransformPoints(yAxisArray);
-            
+
+            for (int i = 0; i < xAxisArray.Length; ++i)
+            {
+                xAxisArray[i].X *= formSizeX;
+                xAxisArray[i].Y *= formSizeY;
+                yAxisArray[i].Y *= formSizeY;
+                yAxisArray[i].X *= formSizeX;
+                xAxisArray[i].X += offsetX;
+                xAxisArray[i].Y += offsetY;
+                yAxisArray[i].Y += offsetY;
+                yAxisArray[i].X += offsetX;
+            }
+
             Pen pen = new Pen(Color.Crimson);
             for (int i = 1; i < xAxisArray.Length; ++i)
             {
@@ -149,11 +178,10 @@ namespace Lab1
                 e.Graphics.DrawLine(pen, yAxisArray[i - 1], yAxisArray[i]);
             }
         }
-        
+
         private void DrawFunctionUpdate(object sender, PaintEventArgs paintEventArgs)
         {
             UpdatePanelSize();
-            UpdateDeltas();
             BuildGraph();
             DrawAxis(sender, paintEventArgs);
             DrawGraph(sender, paintEventArgs);
@@ -236,6 +264,10 @@ namespace Lab1
             numericUpDown1.Maximum = pictureBox1.Height / 2;
             numericUpdateX.Minimum = -pictureBox1.Width / 2;
             numericUpDown1.Minimum = -pictureBox1.Height / 2;
+
+            globalScaleX = pictureBox1.Height / oldHeight;
+            globalScaleY = pictureBox1.Width / oldWidth;
+            
             pictureBox1.Refresh();
         }
         
