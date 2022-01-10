@@ -12,7 +12,7 @@ namespace Lab2
 {
     public partial class Form1 : Form
     {
-        private Pyramid pyramid;
+        //private Pyramid pyramid;
         private View viewState;
         
         public Form1()
@@ -21,24 +21,25 @@ namespace Lab2
             
             viewState = View.Nothing;
             
-            pyramid = new Pyramid();
-            pyramid.Generate();
+           // pyramid = new Pyramid();
+           // pyramid.Generate();
         }
 
         public void PyramidBuilder() //eight-sided truncated pyramid
         {
-            Pyramid pyramid = new Pyramid();
-            pyramid.Generate();
+            //Pyramid pyramid = new Pyramid();
+            //pyramid.Generate();
         }
 
         private void MatrixValueChangedWorker()
         {
-            pyramid.Generate();
+            //pyramid.Generate();
         }
         
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            pyramid.PyramidPaint(sender, e, viewState);
+            e.Graphics.DrawLine(new Pen(Color.Crimson), new Point(22, 33), new Point(60, 44));
+           // pyramid.PyramidPaint(sender, e, viewState);
         }
 
         #region Matrix Input
@@ -157,7 +158,7 @@ namespace Lab2
             {
                 NumericRotationX.Value = 0;
             }
-            pyramid.angleX = (double) NumericRotationX.Value;
+            //pyramid.angleX = (double) NumericRotationX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -168,7 +169,7 @@ namespace Lab2
             {
                 NumericRotationY.Value = 0;
             }
-            pyramid.angleY = (double) NumericRotationY.Value;
+          //  pyramid.angleY = (double) NumericRotationY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -179,49 +180,49 @@ namespace Lab2
             {
                 NumericRotationZ.Value = 0;
             }
-            pyramid.angleZ = (double) NumericRotationZ.Value;
+           // pyramid.angleZ = (double) NumericRotationZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleX_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.scaleX = (double) NumericScaleX.Value;
+         //   pyramid.scaleX = (double) NumericScaleX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleY_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.scaleY = (double) NumericScaleY.Value;
+        //    pyramid.scaleY = (double) NumericScaleY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleZ_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.scaleZ = (double) NumericScaleZ.Value;
+         //   pyramid.scaleZ = (double) NumericScaleZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationX_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetX = (double) NumericTranslationX.Value;
+          //  pyramid.offsetX = (double) NumericTranslationX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationY_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetY = (double) NumericTranslationY.Value;
+          //  pyramid.offsetY = (double) NumericTranslationY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationZ_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetZ = (double) NumericTranslationZ.Value;
+        //    pyramid.offsetZ = (double) NumericTranslationZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
