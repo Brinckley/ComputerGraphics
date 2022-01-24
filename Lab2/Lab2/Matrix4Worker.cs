@@ -6,44 +6,43 @@ namespace Lab2
     {
         
         
-        public static void SetTopView(ref DMatrix4 Matrix_ViewWorld, DMatrix4 Matrix_InWorld)
+        public static void SetTopView(ref DMatrix4 Matrix_ViewWorld)
         {//y = 0
-            /*DMatrix4 TopView = new DMatrix4(
+            DMatrix4 TopView = new DMatrix4(
                 1, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 1, 0, 
-                0, 0, 0, 1); */
-            Matrix_ViewWorld = Matrix_InWorld;
-            Scale4(ref Matrix_ViewWorld, 1, 0, 1);
+                0, 0, 0, 1);
+            Matrix_ViewWorld *= TopView;
+            //Scale4(ref Matrix_ViewWorld, 1, 0, 1);
         }
         
-        public static void SetSideView(ref DMatrix4 Matrix_ViewWorld, DMatrix4 Matrix_InWorld)
+        public static void SetSideView(ref DMatrix4 Matrix_ViewWorld)
         {//x = 0
-            /*DMatrix4 SideView = new DMatrix4(
+            DMatrix4 SideView = new DMatrix4(
                 0, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0, 
-                0, 0, 0, 1);*/ 
-            Matrix_ViewWorld = Matrix_InWorld;
-            Scale4(ref Matrix_ViewWorld, 0, 1, 1);
+                0, 0, 0, 1);
+            Matrix_ViewWorld *= SideView;
+            //Scale4(ref Matrix_ViewWorld, 0, 1, 1);
             //RotationY4(ref Matrix_ViewWorld, 90);
         }
         
-        public static void SetFrontView(ref DMatrix4 Matrix_ViewWorld, DMatrix4 Matrix_InWorld)
+        public static void SetFrontView(ref DMatrix4 Matrix_ViewWorld)
         {//z = 0
-            /*DMatrix4 FrontView = new DMatrix4(
+            DMatrix4 FrontView = new DMatrix4(
                 1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 0, 0,
-                0, 0, 0, 1); */
-            Matrix_ViewWorld = Matrix_InWorld;
-            Scale4(ref Matrix_ViewWorld, 1, 1, 0);
+                0, 0, 0, 1); 
+            Matrix_ViewWorld *= FrontView;
+            //Scale4(ref Matrix_ViewWorld, 1, 1, 0);
         }
         
-        public static void SetIsometricView(ref DMatrix4 Matrix_ViewWorld, DMatrix4 Matrix_InWorld)
+        public static void SetIsometricView(ref DMatrix4 Matrix_ViewWorld)
         {
-            Matrix_ViewWorld = Matrix_InWorld;
-            Scale4(ref Matrix_ViewWorld, 1, 1, 1);
+            //Matrix_ViewWorld *= DMatrix4.Identity;
             RotationX4(ref Matrix_ViewWorld, 35);
             RotationY4(ref Matrix_ViewWorld, 45);
         }

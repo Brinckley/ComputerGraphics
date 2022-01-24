@@ -162,6 +162,7 @@
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.pictureBox1.Resize += new System.EventHandler(this.pictureBox1_Resize);
             // 
             // label4
             // 
@@ -353,7 +354,8 @@
             this.numeric41.DecimalPlaces = 2;
             this.numeric41.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric41.Location = new System.Drawing.Point(12, 87);
-            this.numeric41.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric41.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric41.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric41.Name = "numeric41";
             this.numeric41.Size = new System.Drawing.Size(79, 22);
             this.numeric41.TabIndex = 23;
@@ -365,7 +367,8 @@
             this.numeric31.DecimalPlaces = 2;
             this.numeric31.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric31.Location = new System.Drawing.Point(12, 59);
-            this.numeric31.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric31.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric31.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric31.Name = "numeric31";
             this.numeric31.Size = new System.Drawing.Size(79, 22);
             this.numeric31.TabIndex = 22;
@@ -377,7 +380,8 @@
             this.numeric21.DecimalPlaces = 2;
             this.numeric21.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric21.Location = new System.Drawing.Point(12, 31);
-            this.numeric21.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric21.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric21.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric21.Name = "numeric21";
             this.numeric21.Size = new System.Drawing.Size(79, 22);
             this.numeric21.TabIndex = 21;
@@ -389,7 +393,8 @@
             this.numeric11.DecimalPlaces = 2;
             this.numeric11.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric11.Location = new System.Drawing.Point(12, 3);
-            this.numeric11.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric11.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric11.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric11.Name = "numeric11";
             this.numeric11.Size = new System.Drawing.Size(79, 22);
             this.numeric11.TabIndex = 20;
@@ -401,7 +406,8 @@
             this.numeric42.DecimalPlaces = 2;
             this.numeric42.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric42.Location = new System.Drawing.Point(97, 87);
-            this.numeric42.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric42.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric42.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric42.Name = "numeric42";
             this.numeric42.Size = new System.Drawing.Size(79, 22);
             this.numeric42.TabIndex = 19;
@@ -413,7 +419,8 @@
             this.numeric32.DecimalPlaces = 2;
             this.numeric32.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric32.Location = new System.Drawing.Point(97, 59);
-            this.numeric32.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric32.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric32.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric32.Name = "numeric32";
             this.numeric32.Size = new System.Drawing.Size(79, 22);
             this.numeric32.TabIndex = 18;
@@ -425,7 +432,8 @@
             this.numeric22.DecimalPlaces = 2;
             this.numeric22.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric22.Location = new System.Drawing.Point(97, 31);
-            this.numeric22.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric22.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric22.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric22.Name = "numeric22";
             this.numeric22.Size = new System.Drawing.Size(79, 22);
             this.numeric22.TabIndex = 17;
@@ -437,7 +445,8 @@
             this.numeric12.DecimalPlaces = 2;
             this.numeric12.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric12.Location = new System.Drawing.Point(97, 3);
-            this.numeric12.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric12.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric12.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric12.Name = "numeric12";
             this.numeric12.Size = new System.Drawing.Size(79, 22);
             this.numeric12.TabIndex = 16;
@@ -449,7 +458,8 @@
             this.numeric44.DecimalPlaces = 2;
             this.numeric44.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric44.Location = new System.Drawing.Point(267, 87);
-            this.numeric44.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric44.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric44.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric44.Name = "numeric44";
             this.numeric44.Size = new System.Drawing.Size(79, 22);
             this.numeric44.TabIndex = 15;
@@ -461,7 +471,8 @@
             this.numeric34.DecimalPlaces = 2;
             this.numeric34.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric34.Location = new System.Drawing.Point(267, 59);
-            this.numeric34.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric34.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric34.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric34.Name = "numeric34";
             this.numeric34.Size = new System.Drawing.Size(79, 22);
             this.numeric34.TabIndex = 14;
@@ -473,7 +484,8 @@
             this.numeric24.DecimalPlaces = 2;
             this.numeric24.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric24.Location = new System.Drawing.Point(267, 31);
-            this.numeric24.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric24.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric24.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric24.Name = "numeric24";
             this.numeric24.Size = new System.Drawing.Size(79, 22);
             this.numeric24.TabIndex = 13;
@@ -485,7 +497,8 @@
             this.numeric14.DecimalPlaces = 2;
             this.numeric14.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric14.Location = new System.Drawing.Point(267, 3);
-            this.numeric14.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric14.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric14.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric14.Name = "numeric14";
             this.numeric14.Size = new System.Drawing.Size(79, 22);
             this.numeric14.TabIndex = 12;
@@ -497,7 +510,8 @@
             this.numeric43.DecimalPlaces = 2;
             this.numeric43.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric43.Location = new System.Drawing.Point(182, 87);
-            this.numeric43.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric43.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric43.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric43.Name = "numeric43";
             this.numeric43.Size = new System.Drawing.Size(79, 22);
             this.numeric43.TabIndex = 11;
@@ -509,7 +523,8 @@
             this.numeric33.DecimalPlaces = 2;
             this.numeric33.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric33.Location = new System.Drawing.Point(182, 59);
-            this.numeric33.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric33.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric33.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric33.Name = "numeric33";
             this.numeric33.Size = new System.Drawing.Size(79, 22);
             this.numeric33.TabIndex = 10;
@@ -521,7 +536,8 @@
             this.numeric23.DecimalPlaces = 2;
             this.numeric23.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric23.Location = new System.Drawing.Point(182, 31);
-            this.numeric23.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric23.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric23.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric23.Name = "numeric23";
             this.numeric23.Size = new System.Drawing.Size(79, 22);
             this.numeric23.TabIndex = 9;
@@ -533,7 +549,8 @@
             this.numeric13.DecimalPlaces = 2;
             this.numeric13.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.numeric13.Location = new System.Drawing.Point(182, 3);
-            this.numeric13.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.numeric13.Maximum = new decimal(new int[] {1000, 0, 0, 0});
+            this.numeric13.Minimum = new decimal(new int[] {1000, 0, 0, -2147483648});
             this.numeric13.Name = "numeric13";
             this.numeric13.Size = new System.Drawing.Size(79, 22);
             this.numeric13.TabIndex = 8;

@@ -64,6 +64,23 @@ public class Vertex
             Color = Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
             IsVisible = false;
         }
+        
+        DVector4 Cross(DVector4 v1, DVector4 v2)
+        {
+            double x, y, z;
+            x = v1.Y * v2.Z - v2.Y * v1.Z;
+            y = (v1.X * v2.Z - v2.X * v1.Z) * -1;
+            z = v1.X * v2.Y - v2.X * v1.Y;
+
+            var rtnvector = new DVector4(x, y, z, 0);
+            return rtnvector;
+        }
+        public void SetNormal()
+        {
+            DVector4 a = vertices[1].Point_InLocalSpace - vertices[0].Point_InLocalSpace;
+            DVector4 b = vertices[2].Point_InLocalSpace - vertices[0].Point_InLocalSpace;
+            Normal_InLocalSpace = Cross(b, a);
+        }
     }
     #endregion
     class Pyramid
@@ -71,7 +88,6 @@ public class Vertex
 
         public List<Vertex> pvertices; //all vertices 
         public List<Polygon> ppolygons; //all polygons
-        
         public void Generate()
         {
             //bottom side coordinates
@@ -99,13 +115,13 @@ public class Vertex
             //bottom polygon
             ppolygons[0] = new Polygon();
             ppolygons[0].Color = Color.DarkOrange;
-            ppolygons[0].vertices.Add(pvertices[0]); pvertices[0].polygons.Add(ppolygons[0]);
-            ppolygons[0].vertices.Add(pvertices[1]); pvertices[1].polygons.Add(ppolygons[0]);
-            ppolygons[0].vertices.Add(pvertices[2]); pvertices[2].polygons.Add(ppolygons[0]);
-            ppolygons[0].vertices.Add(pvertices[3]); pvertices[3].polygons.Add(ppolygons[0]);
-            ppolygons[0].vertices.Add(pvertices[4]); pvertices[4].polygons.Add(ppolygons[0]);
-            ppolygons[0].vertices.Add(pvertices[5]); pvertices[5].polygons.Add(ppolygons[0]);
-            ppolygons[0].Normal_InLocalSpace = new DVector4(0, 0, -5, 0);
+            ppolygons[0].vertices.Add(pvertices[5]); pvertices[0].polygons.Add(ppolygons[0]);
+            ppolygons[0].vertices.Add(pvertices[4]); pvertices[1].polygons.Add(ppolygons[0]);
+            ppolygons[0].vertices.Add(pvertices[3]); pvertices[2].polygons.Add(ppolygons[0]);
+            ppolygons[0].vertices.Add(pvertices[2]); pvertices[3].polygons.Add(ppolygons[0]);
+            ppolygons[0].vertices.Add(pvertices[1]); pvertices[4].polygons.Add(ppolygons[0]);
+            ppolygons[0].vertices.Add(pvertices[0]); pvertices[5].polygons.Add(ppolygons[0]);
+          //  ppolygons[0].Normal_InLocalSpace = new DVector4(0, 0, -5, 0);
             //side polygon #1
             ppolygons[1] = new Polygon();
             ppolygons[1].Color = Color.Chartreuse;
@@ -113,7 +129,7 @@ public class Vertex
             ppolygons[1].vertices.Add(pvertices[1]); pvertices[1].polygons.Add(ppolygons[1]);
             ppolygons[1].vertices.Add(pvertices[7]); pvertices[7].polygons.Add(ppolygons[1]);
             ppolygons[1].vertices.Add(pvertices[6]); pvertices[6].polygons.Add(ppolygons[1]);
-            ppolygons[1].Normal_InLocalSpace = new DVector4(17320508076,-10000000000,12990381057,0);
+          //  ppolygons[1].Normal_InLocalSpace = new DVector4(17320508076,-10000000000,12990381057,0);
             //side polygon #2
             ppolygons[2] = new Polygon();
             ppolygons[2].Color = Color.Crimson;
@@ -121,7 +137,7 @@ public class Vertex
             ppolygons[2].vertices.Add(pvertices[2]); pvertices[2].polygons.Add(ppolygons[2]);
             ppolygons[2].vertices.Add(pvertices[8]); pvertices[8].polygons.Add(ppolygons[2]);
             ppolygons[2].vertices.Add(pvertices[7]); pvertices[7].polygons.Add(ppolygons[2]);
-            ppolygons[2].Normal_InLocalSpace = new DVector4(0, -20000000000, 12990381057,0);
+           // ppolygons[2].Normal_InLocalSpace = new DVector4(0, -20000000000, 12990381057,0);
             //side polygon #3
             ppolygons[3] = new Polygon();
             ppolygons[3].Color = Color.White;
@@ -129,7 +145,7 @@ public class Vertex
             ppolygons[3].vertices.Add(pvertices[3]); pvertices[3].polygons.Add(ppolygons[3]);
             ppolygons[3].vertices.Add(pvertices[9]); pvertices[9].polygons.Add(ppolygons[3]);
             ppolygons[3].vertices.Add(pvertices[8]); pvertices[8].polygons.Add(ppolygons[3]);
-            ppolygons[3].Normal_InLocalSpace = new DVector4(-17320508076,-10000000000,12990381057,0);
+          //  ppolygons[3].Normal_InLocalSpace = new DVector4(-17320508076,-10000000000,12990381057,0);
             //side polygon #4
             ppolygons[4] = new Polygon();
             ppolygons[4].Color = Color.Aqua;
@@ -137,7 +153,7 @@ public class Vertex
             ppolygons[4].vertices.Add(pvertices[4]); pvertices[4].polygons.Add(ppolygons[4]);
             ppolygons[4].vertices.Add(pvertices[10]);pvertices[10].polygons.Add(ppolygons[4]);
             ppolygons[4].vertices.Add(pvertices[9]); pvertices[9].polygons.Add(ppolygons[4]);
-            ppolygons[4].Normal_InLocalSpace = new DVector4(-17320508076,10000000000,12990381057,0);
+           // ppolygons[4].Normal_InLocalSpace = new DVector4(-17320508076,10000000000,12990381057,0);
             //side polygon #5
             ppolygons[5] = new Polygon();
             ppolygons[5].Color = Color.Fuchsia;
@@ -145,15 +161,15 @@ public class Vertex
             ppolygons[5].vertices.Add(pvertices[5]); pvertices[5].polygons.Add(ppolygons[5]);
             ppolygons[5].vertices.Add(pvertices[11]);pvertices[11].polygons.Add(ppolygons[5]);
             ppolygons[5].vertices.Add(pvertices[10]);pvertices[10].polygons.Add(ppolygons[5]);
-            ppolygons[5].Normal_InLocalSpace = new DVector4(0, 20000000000, 12990381057, 0);
+           // ppolygons[5].Normal_InLocalSpace = new DVector4(0, 20000000000, 12990381057, 0);
             //side polygon #6
             ppolygons[6] = new Polygon();
             ppolygons[6].Color = Color.Gold;
-            ppolygons[6].vertices.Add(pvertices[0]); pvertices[0].polygons.Add(ppolygons[6]);
-            ppolygons[6].vertices.Add(pvertices[5]); pvertices[5].polygons.Add(ppolygons[6]);
-            ppolygons[6].vertices.Add(pvertices[11]);pvertices[11].polygons.Add(ppolygons[6]);
-            ppolygons[6].vertices.Add(pvertices[6]); pvertices[6].polygons.Add(ppolygons[6]);
-            ppolygons[6].Normal_InLocalSpace = new DVector4(17320508076, 10000000000, 12990381057,0);
+            ppolygons[6].vertices.Add(pvertices[6]); pvertices[0].polygons.Add(ppolygons[6]);
+            ppolygons[6].vertices.Add(pvertices[11]); pvertices[5].polygons.Add(ppolygons[6]);
+            ppolygons[6].vertices.Add(pvertices[5]);pvertices[11].polygons.Add(ppolygons[6]);
+            ppolygons[6].vertices.Add(pvertices[0]); pvertices[6].polygons.Add(ppolygons[6]);
+           // ppolygons[6].Normal_InLocalSpace = new DVector4(17320508076, 10000000000, 12990381057,0);
             //top polygon
             ppolygons[7] = new Polygon();
             ppolygons[7].Color = Color.Indigo;
@@ -163,7 +179,7 @@ public class Vertex
             ppolygons[7].vertices.Add(pvertices[9]); pvertices[9].polygons.Add(ppolygons[0]);
             ppolygons[7].vertices.Add(pvertices[10]); pvertices[10].polygons.Add(ppolygons[0]);
             ppolygons[7].vertices.Add(pvertices[11]); pvertices[11].polygons.Add(ppolygons[0]);
-            ppolygons[7].Normal_InLocalSpace = new DVector4(0, 0, 70f, 0);
+            //ppolygons[7].Normal_InLocalSpace = new DVector4(0, 0, 70f, 0);
             //MessageBox.Show("vert Length   " + pvertices.Count.ToString() + " \n  Polygon Length   " + ppolygons.Count.ToString());
         }
 
@@ -183,7 +199,6 @@ public class Vertex
         public double scaleX = 1; //scale for all axis
         public double scaleY = 1;
         public double scaleZ = 1;
-
         public Pyramid()
         {//initialization 
             pvertices = new List<Vertex>(); //all vertices for the pyramid  
@@ -212,70 +227,74 @@ public class Vertex
         }
         
         
-        public void Transformation()
+        
+        public double globalScaleX = 1; //scaling parameters for form resize
+        public double globalScaleY = 1;
+        public double globalScaleZ = 1;
+        public double globalOffsetX = 0; //offset parameters for form resize
+        public double globalOffsetY = 0;
+        public double globalOffsetZ = 0;
+
+
+        public void Transformation(View view)
         {
             //applying transformation for transform matrices
             Point_Transform = DMatrix4.Identity; //for point
-            Matrix4Worker.Scale4(ref Point_Transform, scaleX, scaleY, scaleZ);
+            Matrix4Worker.Scale4(ref Point_Transform, scaleX * globalScaleX, scaleY * globalScaleY, scaleZ * globalScaleZ);  
             Matrix4Worker.RotationX4(ref Point_Transform, angleX);
             Matrix4Worker.RotationY4(ref Point_Transform, angleY);
             Matrix4Worker.RotationZ4(ref Point_Transform, angleZ);
-            Matrix4Worker.Translate4(ref Point_Transform, offsetX, offsetY, offsetZ);
-
-            //Normal_Transform = DMatrix4.Identity;
-            Normal_Transform = NormalVecTransf(Point_Transform);
-        }
-
-        public void PyramidPaint(object sender, PaintEventArgs e, View view)
-        {
-            Transformation();
-            DMatrix4 pointWorker = new DMatrix4();
-            DMatrix4 normalWorker = new DMatrix4();
-            bool checkVisibility = true;
+            Matrix4Worker.Translate4(ref Point_Transform, offsetX + globalOffsetX, offsetY + globalOffsetY, offsetZ + globalOffsetZ);
+            
             if (view != View.Nothing)
             {
                 if (view == View.Front)
                 {
-                    Matrix4Worker.SetFrontView(ref Point_Viewport, Point_Transform);
-                    Matrix4Worker.SetFrontView(ref Normal_Viewport, Normal_Transform);
+                    Matrix4Worker.SetFrontView(ref Point_Transform);
                 }
                 if (view == View.Side)
                 {
-                    Matrix4Worker.SetSideView(ref Point_Viewport, Point_Transform);
-                    Matrix4Worker.SetSideView(ref Normal_Viewport, Normal_Transform);
+                    Matrix4Worker.SetSideView(ref Point_Transform);
                 }
                 if (view == View.Top)
                 {
-                    Matrix4Worker.SetTopView(ref Point_Viewport, Point_Transform);
-                    Matrix4Worker.SetTopView(ref Normal_Viewport, Normal_Transform);
+                    Matrix4Worker.SetTopView(ref Point_Transform);
                 }
-                checkVisibility = false;
                 if (view == View.Isometric)
                 {
-                    Matrix4Worker.SetIsometricView(ref Point_Viewport, Point_Transform);
-                    Matrix4Worker.SetIsometricView(ref Normal_Viewport, Normal_Transform);
-                    checkVisibility = true;
+                    Matrix4Worker.SetIsometricView(ref Point_Transform);
                 }
-                pointWorker = Point_Viewport;
-                normalWorker = Normal_Viewport;
-            }
-            else
-            {
-                pointWorker = Point_Transform;
-                normalWorker = Normal_Transform;
             }
             
+            //Normal_Transform = DMatrix4.Identity;
+            Normal_Transform = NormalVecTransf(Point_Transform);
+        }
+        
+
+        public void PyramidPaint(object sender, PaintEventArgs e, View view)
+        {
+            Transformation(view);
+            bool checkVisibility = true;
+
             foreach (var v in pvertices) //transform every point
             {
-                v.Point_InGlobalSpace = pointWorker * v.Point_InLocalSpace;
+                v.Point_InGlobalSpace = Point_Transform * v.Point_InLocalSpace;
             }
 
             foreach (var p in ppolygons) //transform every normal + visibility check
             {
-                p.Normal_InGlobalSpace = normalWorker * p.Normal_InLocalSpace;
+                p.SetNormal();
+                p.Normal_InGlobalSpace = Normal_Transform * p.Normal_InLocalSpace;
                 //if normal is more than zero we need to draw the polygon
                 p.IsVisible = p.Normal_InGlobalSpace.Z > 0;
+                
+                /*if (p.Color == Color.DarkOrange)
+                {
+                    MessageBox.Show("Normal X:" + p.Normal_InGlobalSpace.X + " Y: " + p.Normal_InGlobalSpace.Y + " Z: " +
+                                    p.Normal_InGlobalSpace.Z);
+                }*/
             }
+            
             /*
             pvertices.Sort(delegate(Vertex v1, Vertex v2)
             {
@@ -285,6 +304,7 @@ public class Vertex
                 }
                 return -1;
             }); //sorting according to the camera direction*/
+            
             foreach (var p in ppolygons)
             {
                 if (!p.IsVisible && checkVisibility) continue;
@@ -301,17 +321,6 @@ public class Vertex
                 e.Graphics.DrawPolygon(new Pen(Color.Black), pointFs.ToArray()); //drawing borders
                 e.Graphics.FillPolygon(new SolidBrush(p.Color), pointFs.ToArray()); //filling with color 
             }
-        }
-        
-        public bool Check_Coordinate(double x, double y)
-        {
-            bool check = false;
-            while (!check)
-            {
-                
-            }
-
-            return check;
         }
     }
 }

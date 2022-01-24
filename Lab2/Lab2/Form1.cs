@@ -16,25 +16,42 @@ namespace Lab2
         private Pyramid pyramid;
         private View viewState;
 
-        private double oldMouseX = 0;
-        private double oldMouseY = 0;
+        private double oldMouseX;
+        private double oldMouseY;
 
-        private bool IsClicked = false;
-        
+        private bool IsClicked;
+
+        private double oldFormX;
+        private double oldFormY;
+        private double globalScaleX;
+        private double globalScaleY;
+        private double globalOffsetX;
+        private double globalOffsetY;
+
         public Form1()
         {
             InitializeComponent();
             
             viewState = View.Nothing; //default view
+            IsClicked = false;
             
-            //creating new figure
-            pyramid = new Pyramid();
-            pyramid.offsetX = pictureBox1.Width / 2; //default offsets for each axis
-            pyramid.offsetY = pictureBox1.Height / 2;
-            pyramid.offsetZ = pictureBox1.Height / 2;
-
             radioNothing.Checked = true;
             pictureBox1.MouseWheel += Zoom_Wheel;
+
+            //creating new figure
+            pyramid = new Pyramid();
+            pyramid.offsetX = 0;
+            pyramid.offsetY = 0;
+            pyramid.offsetZ = 0;
+            
+            oldFormX = pictureBox1.Width;
+            oldFormY = pictureBox1.Height;
+            oldMouseX = 0;
+            oldMouseY = 0;
+            globalScaleX = 1;  //default scale for each axis
+            globalScaleY = 1;
+            globalOffsetX = pictureBox1.Width / 2;  //default offsets for each axis
+            globalOffsetY = pictureBox1.Height / 2;
         }
         
         private void Zoom_Wheel(object sender, MouseEventArgs e)
@@ -61,13 +78,44 @@ namespace Lab2
             pictureBox1.Refresh();
         }
         
+        private void pictureBox1_Resize(object sender, EventArgs e)
+        {
+            globalScaleY = pictureBox1.Height / oldFormY;
+            globalScaleX = pictureBox1.Width / oldFormX;
+            globalOffsetX = pictureBox1.Width / 2;
+            globalOffsetY = pictureBox1.Height / 2;
+            pictureBox1.Refresh();
+        }
+        
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            pyramid.globalScaleX = globalScaleX;
+            pyramid.globalScaleY = globalScaleY;
+            pyramid.globalOffsetX = globalOffsetX;
+            pyramid.globalOffsetY = globalOffsetY;
             pyramid.PyramidPaint(sender, e, viewState); //calling method for painting the figure from the class
+            
             NumericRotationX.Value = (decimal) pyramid.angleX;
             NumericRotationY.Value = (decimal) pyramid.angleY;
             NumericRotationZ.Value = (decimal) pyramid.angleZ;
+            
+            numeric11.Value = (decimal) pyramid.Point_Transform.M11;
+            numeric12.Value = (decimal) pyramid.Point_Transform.M12;
+            numeric13.Value = (decimal) pyramid.Point_Transform.M13;
+            numeric14.Value = (decimal) pyramid.Point_Transform.M14;
+            numeric21.Value = (decimal) pyramid.Point_Transform.M21;
+            numeric22.Value = (decimal) pyramid.Point_Transform.M22;
+            numeric23.Value = (decimal) pyramid.Point_Transform.M23;
+            numeric24.Value = (decimal) pyramid.Point_Transform.M24;
+            numeric31.Value = (decimal) pyramid.Point_Transform.M31;
+            numeric32.Value = (decimal) pyramid.Point_Transform.M32;
+            numeric33.Value = (decimal) pyramid.Point_Transform.M33;
+            numeric34.Value = (decimal) pyramid.Point_Transform.M34;
+            numeric41.Value = (decimal) pyramid.Point_Transform.M41;
+            numeric42.Value = (decimal) pyramid.Point_Transform.M42;
+            numeric43.Value = (decimal) pyramid.Point_Transform.M43;
+            numeric44.Value = (decimal) pyramid.Point_Transform.M44;
         }
         
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -117,86 +165,118 @@ namespace Lab2
         {
             IsClicked = false;
         }
-
+        
         #region Matrix Input
         private void numeric11_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M11 = (double)numeric11.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric12_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M12 = (double)numeric12.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric13_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M13 = (double)numeric13.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric14_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M14 = (double)numeric14.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric21_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M21 = (double)numeric21.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric22_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M22 = (double)numeric22.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric23_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M23 = (double)numeric23.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric24_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M24 = (double)numeric24.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric31_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M31 = (double)numeric31.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric32_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M32 = (double)numeric32.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric33_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M33 = (double)numeric33.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric34_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M34 = (double)numeric34.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
         
         private void numeric41_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M41 = (double)numeric41.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric42_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M42 = (double)numeric42.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric43_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M43 = (double)numeric43.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void numeric44_ValueChanged(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            pyramid.Point_Transform.M44 = (double)numeric44.Value;
+            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
         #endregion
 
@@ -204,9 +284,6 @@ namespace Lab2
         private void radioNothing_CheckedChanged(object sender, EventArgs e)
         {
             viewState = View.Nothing;
-            NumericRotationX.Value = (decimal) 0;
-            NumericRotationY.Value = (decimal) 0;
-            NumericRotationZ.Value = (decimal) 0;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -214,9 +291,6 @@ namespace Lab2
         private void radioTop_CheckedChanged(object sender, EventArgs e)
         {
             viewState = View.Top;
-            NumericRotationX.Value = (decimal) 90;
-            NumericRotationY.Value = (decimal) 0;
-            NumericRotationZ.Value = (decimal) 0;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -224,9 +298,6 @@ namespace Lab2
         private void radioSide_CheckedChanged(object sender, EventArgs e)
         {
             viewState = View.Side;
-            NumericRotationX.Value = (decimal) 0;
-            NumericRotationY.Value = (decimal) 90;
-            NumericRotationZ.Value = (decimal) 0;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -234,9 +305,6 @@ namespace Lab2
         private void radioFront_CheckedChanged(object sender, EventArgs e)
         {
             viewState = View.Front;
-            NumericRotationX.Value = (decimal) 0;
-            NumericRotationY.Value = (decimal) 0;
-            NumericRotationZ.Value = (decimal) 0;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -318,21 +386,21 @@ namespace Lab2
 
         private void NumericTranslationX_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetX = (double) NumericTranslationX.Value + pictureBox1.Width / 2;
+            pyramid.offsetX = (double) NumericTranslationX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationY_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetY = (double) NumericTranslationY.Value + pictureBox1.Height / 2;
+            pyramid.offsetY = (double) NumericTranslationY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationZ_ValueChanged(object sender, EventArgs e)
         {
-            pyramid.offsetZ = (double) NumericTranslationZ.Value + pictureBox1.Width / 2;
+            pyramid.offsetZ = (double) NumericTranslationZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
