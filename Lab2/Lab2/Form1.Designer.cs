@@ -159,6 +159,9 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // label4
             // 
@@ -171,6 +174,7 @@
             // NumericTranslationZ
             // 
             this.NumericTranslationZ.Location = new System.Drawing.Point(182, 458);
+            this.NumericTranslationZ.Minimum = new decimal(new int[] {100, 0, 0, -2147483648});
             this.NumericTranslationZ.Name = "NumericTranslationZ";
             this.NumericTranslationZ.Size = new System.Drawing.Size(79, 22);
             this.NumericTranslationZ.TabIndex = 41;
@@ -179,6 +183,7 @@
             // NumericTranslationY
             // 
             this.NumericTranslationY.Location = new System.Drawing.Point(97, 458);
+            this.NumericTranslationY.Minimum = new decimal(new int[] {100, 0, 0, -2147483648});
             this.NumericTranslationY.Name = "NumericTranslationY";
             this.NumericTranslationY.Size = new System.Drawing.Size(79, 22);
             this.NumericTranslationY.TabIndex = 40;
@@ -187,6 +192,7 @@
             // NumericTranslationX
             // 
             this.NumericTranslationX.Location = new System.Drawing.Point(12, 458);
+            this.NumericTranslationX.Minimum = new decimal(new int[] {100, 0, 0, -2147483648});
             this.NumericTranslationX.Name = "NumericTranslationX";
             this.NumericTranslationX.Size = new System.Drawing.Size(79, 22);
             this.NumericTranslationX.TabIndex = 39;
@@ -201,6 +207,7 @@
             this.NumericScaleZ.Name = "NumericScaleZ";
             this.NumericScaleZ.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleZ.TabIndex = 37;
+            this.NumericScaleZ.Value = new decimal(new int[] {1, 0, 0, 0});
             this.NumericScaleZ.ValueChanged += new System.EventHandler(this.NumericScaleZ_ValueChanged);
             // 
             // NumericScaleY
@@ -212,6 +219,7 @@
             this.NumericScaleY.Name = "NumericScaleY";
             this.NumericScaleY.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleY.TabIndex = 36;
+            this.NumericScaleY.Value = new decimal(new int[] {1, 0, 0, 0});
             this.NumericScaleY.ValueChanged += new System.EventHandler(this.NumericScaleY_ValueChanged);
             // 
             // NumericScaleX
@@ -223,6 +231,7 @@
             this.NumericScaleX.Name = "NumericScaleX";
             this.NumericScaleX.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleX.TabIndex = 35;
+            this.NumericScaleX.Value = new decimal(new int[] {1, 0, 0, 0});
             this.NumericScaleX.ValueChanged += new System.EventHandler(this.NumericScaleX_ValueChanged);
             // 
             // label2
@@ -237,6 +246,7 @@
             // 
             this.NumericRotationZ.Location = new System.Drawing.Point(182, 402);
             this.NumericRotationZ.Maximum = new decimal(new int[] {360, 0, 0, 0});
+            this.NumericRotationZ.Minimum = new decimal(new int[] {1, 0, 0, -2147483648});
             this.NumericRotationZ.Name = "NumericRotationZ";
             this.NumericRotationZ.Size = new System.Drawing.Size(79, 22);
             this.NumericRotationZ.TabIndex = 33;
@@ -246,6 +256,7 @@
             // 
             this.NumericRotationY.Location = new System.Drawing.Point(97, 402);
             this.NumericRotationY.Maximum = new decimal(new int[] {360, 0, 0, 0});
+            this.NumericRotationY.Minimum = new decimal(new int[] {1, 0, 0, -2147483648});
             this.NumericRotationY.Name = "NumericRotationY";
             this.NumericRotationY.Size = new System.Drawing.Size(79, 22);
             this.NumericRotationY.TabIndex = 32;
@@ -255,6 +266,7 @@
             // 
             this.NumericRotationX.Location = new System.Drawing.Point(12, 402);
             this.NumericRotationX.Maximum = new decimal(new int[] {360, 0, 0, 0});
+            this.NumericRotationX.Minimum = new decimal(new int[] {1, 0, 0, -2147483648});
             this.NumericRotationX.Name = "NumericRotationX";
             this.NumericRotationX.Size = new System.Drawing.Size(79, 22);
             this.NumericRotationX.TabIndex = 31;
