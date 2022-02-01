@@ -1,4 +1,5 @@
 ﻿using System;
+using CGLabPlatform;
 
 namespace Lab2
 {
