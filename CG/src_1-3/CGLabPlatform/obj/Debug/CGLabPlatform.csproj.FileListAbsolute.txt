@@ -1,0 +1,6 @@
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\bin\Debug\CGLabPlatform.dll
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\bin\Debug\CGLabPlatform.pdb
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\obj\Debug\CGLabPlatform.csprojAssemblyReference.cache
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\obj\Debug\CGLabPlatform.csproj.CoreCompileInputs.cache
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\obj\Debug\CGLabPlatform.dll
+D:\github\ComputerGraphics\CG\src_1-3\CGLabPlatform\obj\Debug\CGLabPlatform.pdb

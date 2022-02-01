@@ -4,8 +4,6 @@ namespace Lab2
 {
     public static class Matrix4Worker
     {
-        
-        
         public static void SetTopView(ref DMatrix4 Matrix_ViewWorld)
         {//y = 0
             DMatrix4 TopView = new DMatrix4(

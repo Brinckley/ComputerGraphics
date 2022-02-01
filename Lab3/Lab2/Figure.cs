@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Lab2
 {
-    enum View
+    public enum View
     {
         Nothing, Top, Side, Front, Isometric
     }
@@ -19,6 +19,8 @@ public class Vertex
                 
         public DVector4 Point_InLocalSpace;
         public DVector4 Point_InGlobalSpace;
+
+        public Color Color;
         
         public Vertex()
         {
@@ -80,24 +82,24 @@ public class Vertex
             DVector4 a = vertices[1].Point_InLocalSpace - vertices[0].Point_InLocalSpace;
             DVector4 b = vertices[2].Point_InLocalSpace - vertices[0].Point_InLocalSpace;
             Normal_InLocalSpace = Cross(b, a);
+            Normal_InLocalSpace.Normalize(); //it's important to normalize the vector before any later manipulations 
         }
     }
     #endregion
-    class Ellipsoid
+
+    public class Figure
     {
 
         public List<Vertex> pvertices; //all vertices 
         public List<Polygon> ppolygons; //all polygons
-        public void Generate()
-        {
-            //bottom side coordinates
-            
-            ppolygons = new List<Polygon>(); //creating templates for later filling
-            for (int i = 0; i < 8; ++i)
-            {
-                ppolygons.Add(new Polygon());
-            }
-        }
+
+        public double a;
+        public double b;
+        public double c;
+        public double r;
+        public double inner;
+        public int accuracyVertical;
+        public int accuracyHorizontal;
 
         public DMatrix4 Point_Transform;
         public DMatrix4 Normal_Transform;
@@ -115,9 +117,9 @@ public class Vertex
         public double scaleX = 1; //scale for all axis
         public double scaleY = 1;
         public double scaleZ = 1;
-        
-        public Ellipsoid()
-        {//initialization 
+
+        public Figure(double a, double b, double c, double r, double inner,int accuracyVertical, int accuracyHorizontal)
+        {//initialization for ellipsoid
             pvertices = new List<Vertex>(); //all vertices for the pyramid  
             ppolygons = new List<Polygon>(); //all polygons for the pyramid 
             Point_Transform = new DMatrix4(); // matrix for transformation of the point coordinates 
@@ -126,7 +128,94 @@ public class Vertex
             Normal_Viewport = new DMatrix4(); // matrix for point view changing ---
             Point_Transform = DMatrix4.Identity; 
             Normal_Transform = DMatrix4.Identity;
-            Generate(); //generating an object according to the task
+            this.a = a;
+            this.b = b;
+            this.c = c;
+            this.r = r;
+            this.inner = inner;
+            this.accuracyVertical = accuracyVertical;
+            this.accuracyHorizontal = accuracyHorizontal;
+            GenerateEllipsoid(); //generating an object according to the task
+        }
+        
+        public void GenerateEllipsoid()
+        {
+            // Standard equation: (x/a)^2 + (y/b)^2 + (z/c)^2 = r
+            // Parameterization:                                      ----------
+            // x = a * sin(theta) * cos(phi)                        /            \
+            // y = b * sin(theta) * sin(phi)                        \            /
+            // z = c * cos(theta)                                     ----------
+            // 0 <= theta <= pi    0 <= phi < 2pi
+            // that means: theta is for vertical lines, phi - for horizontal (we draw a circle as a 2pi angle)
+
+            pvertices.Add(new Vertex(0f, 0f, (float) (c * inner), 1f));
+                
+            for (int i = 1; i <= accuracyHorizontal * inner; ++i)
+            {
+                float theta = (float) (i * Math.PI / (1 + accuracyHorizontal));
+                for (int j = 0; j < accuracyVertical; ++j)
+                {
+                    float phi = (float) (j * 2 * Math.PI / accuracyVertical);
+                    pvertices.Add(new Vertex(
+                        (float) (a * Math.Sin(theta) * Math.Cos(phi)),
+                        (float) (b * Math.Sin(theta) * Math.Sin(phi)),
+                        (float) (c * Math.Cos(theta)),
+                        1f));
+                }
+            }
+            pvertices.Add(new Vertex(0f, 0f, (float) - (c * inner), 1f)); //hear comes the line
+
+            for (int i = 1; i < accuracyVertical; ++i)
+            {
+                ppolygons.Add(new Polygon(new List<Vertex>
+                {
+                    pvertices[0],
+                    pvertices[i + 1],
+                    pvertices[i]
+                }));
+            }
+            
+            ppolygons.Add(new Polygon(new List<Vertex>
+            {
+                pvertices[0],
+                pvertices[1], 
+                pvertices[accuracyVertical - 1]
+            }));
+            
+            for (int i = 0; i < accuracyHorizontal * inner- 1; ++i)
+            {
+                int shiftOnParralel = 1 + i * accuracyVertical;
+                for (int j = 0; j < accuracyVertical - 1; ++j)
+                {
+                    ppolygons.Add(new Polygon(new List<Vertex>{
+                        pvertices[shiftOnParralel + j], 
+                        pvertices[shiftOnParralel + j + 1], 
+                        pvertices[shiftOnParralel + accuracyVertical + j + 1], 
+                        pvertices[shiftOnParralel + accuracyVertical + j]}));
+                }
+                ppolygons.Add(new Polygon(new List<Vertex>{
+                    pvertices[shiftOnParralel + accuracyVertical - 1], 
+                    pvertices[shiftOnParralel], 
+                    pvertices[shiftOnParralel + accuracyVertical], 
+                    pvertices[shiftOnParralel + accuracyVertical + accuracyVertical - 1]}));
+            }
+            
+            for (int i = pvertices.Count - accuracyVertical - 1; i < pvertices.Count - 2; ++i) //upper side
+            {
+                ppolygons.Add(new Polygon(new List<Vertex>
+                {
+                    pvertices[pvertices.Count - 1],
+                    pvertices[i],
+                    pvertices[i + 1]
+                }));
+            }
+            
+            ppolygons.Add(new Polygon(new List<Vertex> //last part
+            {
+                pvertices[pvertices.Count - 1],
+                pvertices[pvertices.Count - 2],
+                pvertices[pvertices.Count - accuracyVertical - 1]
+            }));
         }
         
         public DMatrix4 NormalVecTransf(DMatrix4 matrix) { //doesn't want to work from the Math class????????
@@ -142,8 +231,6 @@ public class Vertex
                 matrix.M11 * matrix.M22 - matrix.M21 * matrix.M12, 0,
                 0,   0,   0,   0);
         }
-        
-        
         
         public double globalScaleX = 1; //scaling parameters for form resize
         public double globalScaleY = 1;
@@ -186,9 +273,8 @@ public class Vertex
             //Normal_Transform = DMatrix4.Identity;
             Normal_Transform = NormalVecTransf(Point_Transform);
         }
-        
 
-        public void PyramidPaint(object sender, PaintEventArgs e, View view)
+        public void FigurePaint(object sender, PaintEventArgs e, View view)
         {
             Transformation(view);
             bool checkVisibility = true;

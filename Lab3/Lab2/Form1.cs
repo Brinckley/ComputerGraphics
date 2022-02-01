@@ -13,7 +13,7 @@ namespace Lab2
 {
     public partial class Form1 : Form
     {
-        private Ellipsoid ellipsoid;
+        private Figure ellipsoid;
         private View viewState;
 
         private double oldMouseX;
@@ -39,10 +39,10 @@ namespace Lab2
             pictureBox1.MouseWheel += Zoom_Wheel;
 
             //creating new figure
-            //pyramid = new Pyramid();
-            //pyramid.offsetX = 0;
-            //pyramid.offsetY = 0;
-            //pyramid.offsetZ = 0;
+            ellipsoid = new Figure(120, 50, 30, 80, 0.8, 30, 30);
+            ellipsoid.offsetX = 0;
+            ellipsoid.offsetY = 0;
+            ellipsoid.offsetZ = 0;
             
             oldFormX = pictureBox1.Width;
             oldFormY = pictureBox1.Height;
@@ -58,17 +58,17 @@ namespace Lab2
         {
             if (e.Delta > 0)
             {
-           //     pyramid.scaleX += 0.01f;
-           //     pyramid.scaleY += 0.01f;
-           //     pyramid.scaleZ += 0.01f;
+                ellipsoid.scaleX += 0.01f;
+                ellipsoid.scaleY += 0.01f;
+                ellipsoid.scaleZ += 0.01f;
             }
             else
             {
                 if (ellipsoid.scaleX > 0.01f && ellipsoid.scaleY > 0.01f && ellipsoid.scaleZ > 0.01f)
                 {
-            //        pyramid.scaleX -= 0.01f;
-            //        pyramid.scaleY -= 0.01f;
-            //        pyramid.scaleZ -= 0.01f;
+                    ellipsoid.scaleX -= 0.01f;
+                    ellipsoid.scaleY -= 0.01f;
+                    ellipsoid.scaleZ -= 0.01f;
                 }
             }
             NumericScaleX.Value = (decimal) ellipsoid.scaleX;
@@ -90,32 +90,32 @@ namespace Lab2
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-           // pyramid.globalScaleX = globalScaleX;
-           // pyramid.globalScaleY = globalScaleY;
-          //  pyramid.globalOffsetX = globalOffsetX;
-           // pyramid.globalOffsetY = globalOffsetY;
-          //  pyramid.PyramidPaint(sender, e, viewState); //calling method for painting the figure from the class
-        /*    
-            NumericRotationX.Value = (decimal) pyramid.angleX;
-            NumericRotationY.Value = (decimal) pyramid.angleY;
-            NumericRotationZ.Value = (decimal) pyramid.angleZ;
+            ellipsoid.globalScaleX = globalScaleX;
+            ellipsoid.globalScaleY = globalScaleY;
+            ellipsoid.globalOffsetX = globalOffsetX;
+            ellipsoid.globalOffsetY = globalOffsetY;
+            ellipsoid.FigurePaint(sender, e, viewState); //calling method for painting the figure from the class
             
-            numeric11.Value = (decimal) pyramid.Point_Transform.M11;
-            numeric12.Value = (decimal) pyramid.Point_Transform.M12;
-            numeric13.Value = (decimal) pyramid.Point_Transform.M13;
-            numeric14.Value = (decimal) pyramid.Point_Transform.M14;
-            numeric21.Value = (decimal) pyramid.Point_Transform.M21;
-            numeric22.Value = (decimal) pyramid.Point_Transform.M22;
-            numeric23.Value = (decimal) pyramid.Point_Transform.M23;
-            numeric24.Value = (decimal) pyramid.Point_Transform.M24;
-            numeric31.Value = (decimal) pyramid.Point_Transform.M31;
-            numeric32.Value = (decimal) pyramid.Point_Transform.M32;
-            numeric33.Value = (decimal) pyramid.Point_Transform.M33;
-            numeric34.Value = (decimal) pyramid.Point_Transform.M34;
-            numeric41.Value = (decimal) pyramid.Point_Transform.M41;
-            numeric42.Value = (decimal) pyramid.Point_Transform.M42;
-            numeric43.Value = (decimal) pyramid.Point_Transform.M43;
-            numeric44.Value = (decimal) pyramid.Point_Transform.M44;*/
+            NumericRotationX.Value = (decimal) ellipsoid.angleX;
+            NumericRotationY.Value = (decimal) ellipsoid.angleY;
+            NumericRotationZ.Value = (decimal) ellipsoid.angleZ;
+            
+            numeric11.Value = (decimal) ellipsoid.Point_Transform.M11;
+            numeric12.Value = (decimal) ellipsoid.Point_Transform.M12;
+            numeric13.Value = (decimal) ellipsoid.Point_Transform.M13;
+            numeric14.Value = (decimal) ellipsoid.Point_Transform.M14;
+            numeric21.Value = (decimal) ellipsoid.Point_Transform.M21;
+            numeric22.Value = (decimal) ellipsoid.Point_Transform.M22;
+            numeric23.Value = (decimal) ellipsoid.Point_Transform.M23;
+            numeric24.Value = (decimal) ellipsoid.Point_Transform.M24;
+            numeric31.Value = (decimal) ellipsoid.Point_Transform.M31;
+            numeric32.Value = (decimal) ellipsoid.Point_Transform.M32;
+            numeric33.Value = (decimal) ellipsoid.Point_Transform.M33;
+            numeric34.Value = (decimal) ellipsoid.Point_Transform.M34;
+            numeric41.Value = (decimal) ellipsoid.Point_Transform.M41;
+            numeric42.Value = (decimal) ellipsoid.Point_Transform.M42;
+            numeric43.Value = (decimal) ellipsoid.Point_Transform.M43;
+            numeric44.Value = (decimal) ellipsoid.Point_Transform.M44;
         }
         
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -134,8 +134,8 @@ namespace Lab2
             {
                 double newMouseX = e.X;
                 double newMouseY = e.Y;
-              //  pyramid.angleY += (newMouseX - oldMouseX);
-              //  pyramid.angleX += (oldMouseY - newMouseY);
+                ellipsoid.angleY += (newMouseX - oldMouseX);
+                ellipsoid.angleX += (oldMouseY - newMouseY);
                 if (ellipsoid.angleX < 0)
                 {
                     ellipsoid.angleX += 360;
@@ -328,7 +328,7 @@ namespace Lab2
             {
                 NumericRotationX.Value = 359;
             }
-            //pyramid.angleX = (double) NumericRotationX.Value;
+            ellipsoid.angleX = (double) NumericRotationX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -343,7 +343,7 @@ namespace Lab2
             {
                 NumericRotationY.Value = 359;
             }
-            //pyramid.angleY = (double) NumericRotationY.Value;
+            ellipsoid.angleY = (double) NumericRotationY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
@@ -358,53 +358,70 @@ namespace Lab2
             {
                 NumericRotationZ.Value = 359;
             }
-            //pyramid.angleZ = (double) NumericRotationZ.Value;
+            ellipsoid.angleZ = (double) NumericRotationZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleX_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.scaleX = (double) NumericScaleX.Value;
+            ellipsoid.scaleX = (double) NumericScaleX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleY_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.scaleY = (double) NumericScaleY.Value;
+            ellipsoid.scaleY = (double) NumericScaleY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericScaleZ_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.scaleZ = (double) NumericScaleZ.Value;
+            ellipsoid.scaleZ = (double) NumericScaleZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationX_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.offsetX = (double) NumericTranslationX.Value;
+            ellipsoid.offsetX = (double) NumericTranslationX.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationY_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.offsetY = (double) NumericTranslationY.Value;
+            ellipsoid.offsetY = (double) NumericTranslationY.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
 
         private void NumericTranslationZ_ValueChanged(object sender, EventArgs e)
         {
-            //pyramid.offsetZ = (double) NumericTranslationZ.Value;
+            ellipsoid.offsetZ = (double) NumericTranslationZ.Value;
             pictureBox1.Refresh();
             this.Invalidate();
         }
         
         #endregion
+
+        #region Approximation
+        
+        private void numericHorizontal_ValueChanged(object sender, EventArgs e)
+        {
+            ellipsoid.accuracyHorizontal = (int) numericHorizontal.Value;
+            pictureBox1.Refresh();
+        }
+
+        private void numerciVertical_ValueChanged(object sender, EventArgs e)
+        {
+            ellipsoid.accuracyVertical = (int) numerciVertical.Value;
+            pictureBox1.Refresh();
+        }
+
+        #endregion
+        
     }
 }

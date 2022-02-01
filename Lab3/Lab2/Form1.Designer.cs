@@ -31,6 +31,18 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.LabelVertical = new System.Windows.Forms.Label();
+            this.LabelScaling = new System.Windows.Forms.Label();
+            this.LetterR = new System.Windows.Forms.Label();
+            this.LetterC = new System.Windows.Forms.Label();
+            this.LetterB = new System.Windows.Forms.Label();
+            this.LetterA = new System.Windows.Forms.Label();
+            this.numericR = new System.Windows.Forms.NumericUpDown();
+            this.numericC = new System.Windows.Forms.NumericUpDown();
+            this.numericB = new System.Windows.Forms.NumericUpDown();
+            this.numericA = new System.Windows.Forms.NumericUpDown();
+            this.numerciVertical = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.NumericTranslationZ = new System.Windows.Forms.NumericUpDown();
             this.NumericTranslationY = new System.Windows.Forms.NumericUpDown();
@@ -48,7 +60,7 @@
             this.radioTop = new System.Windows.Forms.RadioButton();
             this.radioNothing = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericHorizontal = new System.Windows.Forms.NumericUpDown();
             this.numeric41 = new System.Windows.Forms.NumericUpDown();
             this.numeric31 = new System.Windows.Forms.NumericUpDown();
             this.numeric21 = new System.Windows.Forms.NumericUpDown();
@@ -71,6 +83,12 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericC)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numerciVertical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationX)).BeginInit();
@@ -80,7 +98,7 @@
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericHorizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric41)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric31)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric21)).BeginInit();
@@ -111,6 +129,18 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
+            this.splitContainer1.Panel2.Controls.Add(this.LabelVertical);
+            this.splitContainer1.Panel2.Controls.Add(this.LabelScaling);
+            this.splitContainer1.Panel2.Controls.Add(this.LetterR);
+            this.splitContainer1.Panel2.Controls.Add(this.LetterC);
+            this.splitContainer1.Panel2.Controls.Add(this.LetterB);
+            this.splitContainer1.Panel2.Controls.Add(this.LetterA);
+            this.splitContainer1.Panel2.Controls.Add(this.numericR);
+            this.splitContainer1.Panel2.Controls.Add(this.numericC);
+            this.splitContainer1.Panel2.Controls.Add(this.numericB);
+            this.splitContainer1.Panel2.Controls.Add(this.numericA);
+            this.splitContainer1.Panel2.Controls.Add(this.numerciVertical);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.NumericTranslationZ);
             this.splitContainer1.Panel2.Controls.Add(this.NumericTranslationY);
@@ -128,7 +158,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.radioTop);
             this.splitContainer1.Panel2.Controls.Add(this.radioNothing);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
+            this.splitContainer1.Panel2.Controls.Add(this.numericHorizontal);
             this.splitContainer1.Panel2.Controls.Add(this.numeric41);
             this.splitContainer1.Panel2.Controls.Add(this.numeric31);
             this.splitContainer1.Panel2.Controls.Add(this.numeric21);
@@ -163,6 +193,107 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             this.pictureBox1.Resize += new System.EventHandler(this.pictureBox1_Resize);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(12, 291);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(79, 22);
+            this.numericUpDown1.TabIndex = 54;
+            // 
+            // LabelVertical
+            // 
+            this.LabelVertical.Location = new System.Drawing.Point(97, 146);
+            this.LabelVertical.Name = "LabelVertical";
+            this.LabelVertical.Size = new System.Drawing.Size(114, 23);
+            this.LabelVertical.TabIndex = 53;
+            this.LabelVertical.Text = "Vertical approx";
+            // 
+            // LabelScaling
+            // 
+            this.LabelScaling.Location = new System.Drawing.Point(267, 432);
+            this.LabelScaling.Name = "LabelScaling";
+            this.LabelScaling.Size = new System.Drawing.Size(100, 23);
+            this.LabelScaling.TabIndex = 52;
+            this.LabelScaling.Text = "Scale";
+            // 
+            // LetterR
+            // 
+            this.LetterR.Location = new System.Drawing.Point(97, 263);
+            this.LetterR.Name = "LetterR";
+            this.LetterR.Size = new System.Drawing.Size(100, 22);
+            this.LetterR.TabIndex = 51;
+            this.LetterR.Text = "R";
+            // 
+            // LetterC
+            // 
+            this.LetterC.Location = new System.Drawing.Point(97, 235);
+            this.LetterC.Name = "LetterC";
+            this.LetterC.Size = new System.Drawing.Size(100, 22);
+            this.LetterC.TabIndex = 50;
+            this.LetterC.Text = "c";
+            // 
+            // LetterB
+            // 
+            this.LetterB.Location = new System.Drawing.Point(97, 207);
+            this.LetterB.Name = "LetterB";
+            this.LetterB.Size = new System.Drawing.Size(100, 22);
+            this.LetterB.TabIndex = 49;
+            this.LetterB.Text = "b";
+            // 
+            // LetterA
+            // 
+            this.LetterA.Location = new System.Drawing.Point(97, 181);
+            this.LetterA.Name = "LetterA";
+            this.LetterA.Size = new System.Drawing.Size(100, 23);
+            this.LetterA.TabIndex = 48;
+            this.LetterA.Text = "a";
+            // 
+            // numericR
+            // 
+            this.numericR.Location = new System.Drawing.Point(12, 263);
+            this.numericR.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericR.Name = "numericR";
+            this.numericR.Size = new System.Drawing.Size(79, 22);
+            this.numericR.TabIndex = 47;
+            this.numericR.Value = new decimal(new int[] {40, 0, 0, 0});
+            // 
+            // numericC
+            // 
+            this.numericC.Location = new System.Drawing.Point(12, 235);
+            this.numericC.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericC.Name = "numericC";
+            this.numericC.Size = new System.Drawing.Size(79, 22);
+            this.numericC.TabIndex = 46;
+            this.numericC.Value = new decimal(new int[] {9, 0, 0, 0});
+            // 
+            // numericB
+            // 
+            this.numericB.Location = new System.Drawing.Point(12, 207);
+            this.numericB.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericB.Name = "numericB";
+            this.numericB.Size = new System.Drawing.Size(79, 22);
+            this.numericB.TabIndex = 45;
+            this.numericB.Value = new decimal(new int[] {4, 0, 0, 0});
+            // 
+            // numericA
+            // 
+            this.numericA.Location = new System.Drawing.Point(12, 179);
+            this.numericA.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numericA.Name = "numericA";
+            this.numericA.Size = new System.Drawing.Size(79, 22);
+            this.numericA.TabIndex = 44;
+            this.numericA.Value = new decimal(new int[] {2, 0, 0, 0});
+            // 
+            // numerciVertical
+            // 
+            this.numerciVertical.Location = new System.Drawing.Point(12, 147);
+            this.numerciVertical.Minimum = new decimal(new int[] {3, 0, 0, 0});
+            this.numerciVertical.Name = "numerciVertical";
+            this.numerciVertical.Size = new System.Drawing.Size(79, 22);
+            this.numerciVertical.TabIndex = 43;
+            this.numerciVertical.Value = new decimal(new int[] {50, 0, 0, 0});
+            this.numerciVertical.ValueChanged += new System.EventHandler(this.numerciVertical_ValueChanged);
             // 
             // label4
             // 
@@ -204,7 +335,7 @@
             this.NumericScaleZ.DecimalPlaces = 2;
             this.NumericScaleZ.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleZ.Location = new System.Drawing.Point(182, 430);
-            this.NumericScaleZ.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.NumericScaleZ.Minimum = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleZ.Name = "NumericScaleZ";
             this.NumericScaleZ.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleZ.TabIndex = 37;
@@ -216,7 +347,7 @@
             this.NumericScaleY.DecimalPlaces = 2;
             this.NumericScaleY.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleY.Location = new System.Drawing.Point(97, 430);
-            this.NumericScaleY.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.NumericScaleY.Minimum = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleY.Name = "NumericScaleY";
             this.NumericScaleY.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleY.TabIndex = 36;
@@ -228,7 +359,7 @@
             this.NumericScaleX.DecimalPlaces = 2;
             this.NumericScaleX.Increment = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleX.Location = new System.Drawing.Point(12, 430);
-            this.NumericScaleX.Maximum = new decimal(new int[] {10, 0, 0, 0});
+            this.NumericScaleX.Minimum = new decimal(new int[] {1, 0, 0, 131072});
             this.NumericScaleX.Name = "NumericScaleX";
             this.NumericScaleX.Size = new System.Drawing.Size(79, 22);
             this.NumericScaleX.TabIndex = 35;
@@ -275,9 +406,9 @@
             // 
             // radioIsometric
             // 
-            this.radioIsometric.Location = new System.Drawing.Point(31, 340);
+            this.radioIsometric.Location = new System.Drawing.Point(231, 237);
             this.radioIsometric.Name = "radioIsometric";
-            this.radioIsometric.Size = new System.Drawing.Size(185, 24);
+            this.radioIsometric.Size = new System.Drawing.Size(115, 24);
             this.radioIsometric.TabIndex = 30;
             this.radioIsometric.TabStop = true;
             this.radioIsometric.Text = "Isometric view";
@@ -286,9 +417,9 @@
             // 
             // radioFront
             // 
-            this.radioFront.Location = new System.Drawing.Point(31, 310);
+            this.radioFront.Location = new System.Drawing.Point(231, 207);
             this.radioFront.Name = "radioFront";
-            this.radioFront.Size = new System.Drawing.Size(168, 24);
+            this.radioFront.Size = new System.Drawing.Size(115, 24);
             this.radioFront.TabIndex = 29;
             this.radioFront.TabStop = true;
             this.radioFront.Text = "Front view";
@@ -297,9 +428,9 @@
             // 
             // radioSide
             // 
-            this.radioSide.Location = new System.Drawing.Point(31, 280);
+            this.radioSide.Location = new System.Drawing.Point(231, 177);
             this.radioSide.Name = "radioSide";
-            this.radioSide.Size = new System.Drawing.Size(168, 24);
+            this.radioSide.Size = new System.Drawing.Size(115, 24);
             this.radioSide.TabIndex = 28;
             this.radioSide.TabStop = true;
             this.radioSide.Text = "Side view";
@@ -308,9 +439,9 @@
             // 
             // radioTop
             // 
-            this.radioTop.Location = new System.Drawing.Point(31, 250);
+            this.radioTop.Location = new System.Drawing.Point(231, 147);
             this.radioTop.Name = "radioTop";
-            this.radioTop.Size = new System.Drawing.Size(168, 24);
+            this.radioTop.Size = new System.Drawing.Size(115, 24);
             this.radioTop.TabIndex = 27;
             this.radioTop.TabStop = true;
             this.radioTop.Text = "Top view";
@@ -319,9 +450,9 @@
             // 
             // radioNothing
             // 
-            this.radioNothing.Location = new System.Drawing.Point(31, 220);
+            this.radioNothing.Location = new System.Drawing.Point(231, 117);
             this.radioNothing.Name = "radioNothing";
-            this.radioNothing.Size = new System.Drawing.Size(168, 24);
+            this.radioNothing.Size = new System.Drawing.Size(115, 24);
             this.radioNothing.TabIndex = 26;
             this.radioNothing.TabStop = true;
             this.radioNothing.Text = "Nothing";
@@ -330,23 +461,21 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(152, 154);
+            this.label1.Location = new System.Drawing.Point(97, 117);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 22);
+            this.label1.Size = new System.Drawing.Size(128, 22);
             this.label1.TabIndex = 25;
-            this.label1.Text = "Approximation";
+            this.label1.Text = "Horizontal approx";
             // 
-            // numericUpDown1
+            // numericHorizontal
             // 
-            this.numericUpDown1.DecimalPlaces = 3;
-            this.numericUpDown1.Increment = new decimal(new int[] {1, 0, 0, 196608});
-            this.numericUpDown1.Location = new System.Drawing.Point(19, 154);
-            this.numericUpDown1.Maximum = new decimal(new int[] {1, 0, 0, 0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {1, 0, 0, 131072});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
-            this.numericUpDown1.TabIndex = 24;
-            this.numericUpDown1.Value = new decimal(new int[] {60, 0, 0, 196608});
+            this.numericHorizontal.Location = new System.Drawing.Point(12, 119);
+            this.numericHorizontal.Minimum = new decimal(new int[] {3, 0, 0, 0});
+            this.numericHorizontal.Name = "numericHorizontal";
+            this.numericHorizontal.Size = new System.Drawing.Size(79, 22);
+            this.numericHorizontal.TabIndex = 24;
+            this.numericHorizontal.Value = new decimal(new int[] {50, 0, 0, 0});
+            this.numericHorizontal.ValueChanged += new System.EventHandler(this.numericHorizontal_ValueChanged);
             // 
             // numeric41
             // 
@@ -575,6 +704,12 @@
             ((System.ComponentModel.ISupportInitialize) (this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericC)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numerciVertical)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationY)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericTranslationX)).EndInit();
@@ -584,7 +719,7 @@
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationY)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.NumericRotationX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericHorizontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric41)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric31)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numeric21)).EndInit();
@@ -603,6 +738,26 @@
             ((System.ComponentModel.ISupportInitialize) (this.numeric13)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label LabelVertical;
+
+        private System.Windows.Forms.Label LabelScaling;
+
+        private System.Windows.Forms.Label LetterR;
+
+        private System.Windows.Forms.Label LetterB;
+        private System.Windows.Forms.Label LetterC;
+
+        private System.Windows.Forms.Label LetterA;
+
+        private System.Windows.Forms.NumericUpDown numericR;
+
+        private System.Windows.Forms.NumericUpDown numericA;
+        private System.Windows.Forms.NumericUpDown numericB;
+        private System.Windows.Forms.NumericUpDown numericC;
+
+        private System.Windows.Forms.NumericUpDown numericHorizontal;
+        private System.Windows.Forms.NumericUpDown numerciVertical;
 
         private System.Windows.Forms.NumericUpDown NumericTranslationX;
 
