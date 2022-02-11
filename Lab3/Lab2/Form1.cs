@@ -14,7 +14,7 @@ namespace Lab2
     public partial class Form1 : Form
     {
         //private Figure ellipsoid;
-        private View viewState;
+        private ViewType viewState;
 
         private double oldMouseX;
         private double oldMouseY;
