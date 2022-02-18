@@ -133,7 +133,7 @@ public abstract class CGLabDemoOGL : OGLApplicationTemplate<CGLabDemoOGL>
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.CullFace(OpenGL.GL_BACK); // working with polygons with normals against the camera
             gl.ClearColor(0, 0, 0, 0);
-            gl.FrontFace(OpenGL.GL_CW); // vertex runner 
+            gl.FrontFace(OpenGL.GL_CW); // vertex runner  (clockwise)
             gl.PolygonMode(OpenGL.GL_FRONT, OpenGL.GL_LINE);
             gl.PolygonMode(OpenGL.GL_BACK, OpenGL.GL_FILL);
         });
@@ -261,7 +261,7 @@ public abstract class CGLabDemoOGL : OGLApplicationTemplate<CGLabDemoOGL>
             DMatrix3 RZ = new DMatrix3(Math.Cos(psi), -Math.Sin(psi), 0,
                                        Math.Sin(psi), Math.Cos(psi), 0,
                                        0, 0, 1);
-            var cameraTransform = (RX * RY) * RZ;
+            var cameraTransform = (RX * RY) * RZ; // all rotations combined
             var cameraPosition = cameraTransform * new DVector3(0, 0, Distance);
             var cameraUpDirection = cameraTransform * new DVector3(0, 1, 0);
             // Local -> Global

@@ -268,102 +268,139 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
     private DMatrix4 Normal_Transform;
 
     private DVector3 Global_Offset;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public void GenerateEllipsoid()
     {
-        int accuracyHorizontal = Horizontal;
-        int accuracyVertical = Vertical;
+        // Standard equation: (x/a)^2 + (y/b)^2 + (z/c)^2 = r
+        // Parameterization:                                      ----------
+        // x = a * sin(theta) * cos(phi)                        /            \
+        // y = b * sin(theta) * sin(phi)                        \            /
+        // z = c * cos(theta)                                     ----------
+        // 0 <= theta <= pi    0 <= phi < 2pi
+        // that means: theta is for vertical lines, phi - for horizontal (we draw a circle as a 2pi angle)
 
-        double a = ArgA;
-        double b = ArgB;
-        double c = ArgC;
-        double inner = 0.8d;
-            // Standard equation: (x/a)^2 + (y/b)^2 + (z/c)^2 = r
-            // Parameterization:                                      ----------
-            // x = a * sin(theta) * cos(phi)                        /            \
-            // y = b * sin(theta) * sin(phi)                        \            /
-            // z = c * cos(theta)                                     ----------
-            // 0 <= theta <= pi    0 <= phi < 2pi
-            // that means: theta is for vertical lines, phi - for horizontal (we draw a circle as a 2pi angle)
-
-        pvertices.Add(new Vertex(0f, 0f, (float) (c * inner), 1f));
-        
-        for (int i = 1; i <= accuracyHorizontal * inner; ++i)
+        double Parameter_h = 0.8d;
+        double NewC = ArgC * Parameter_h;
+        pvertices = new List<Vertex>();
+        /*
+        // upper side
+        pvertices.Add(new Vertex(0f, 0f, (float) NewC, 1f));
+        for (int i = 0; i < Horizontal; ++i)
         {
-            float theta = (float) (i * Math.PI / (1 + accuracyHorizontal));
-            for (int j = 0; j < accuracyVertical; ++j)
-            {
-                float phi = (float) (j * 2 * Math.PI / accuracyVertical);
-                pvertices.Add(new Vertex(
-                    (float) (a * Math.Sin(theta) * Math.Cos(phi)),
-                    (float) (b * Math.Sin(theta) * Math.Sin(phi)),
-                    (float) (c * Math.Cos(theta)),
-                    1f));
-            }
+            double phi = i * 2 * Math.PI / Horizontal;
+            pvertices.Add(new Vertex(
+                (float) (ArgA * Math.Cos(phi)),
+                (float) (ArgB * Math.Sin(phi)),
+                (float) (NewC), 
+                1f
+                ));
         }
-        
-        pvertices.Add(new Vertex(0f, 0f, (float) - (c * inner), 1f)); //hear comes the line
 
-        for (int i = 1; i < accuracyVertical; ++i)
+        for (int i = 1; i < Horizontal; ++i)
         {
-            ppolygons.Add(new Polygon(new List<Vertex>
-            {
+            ppolygons.Add(new Polygon( new List<Vertex>() {
                 pvertices[0],
                 pvertices[i + 1],
                 pvertices[i]
-            }));
+                }));
         }
-            
+        
         ppolygons.Add(new Polygon(new List<Vertex>
         {
             pvertices[0],
             pvertices[1], 
-            pvertices[accuracyVertical - 1]
+            pvertices[Horizontal - 1]
         }));
-            
-        for (int i = 0; i < accuracyHorizontal * inner- 1; ++i)
+        // already have 26 vert   =    horizontal + 1
+        
+        // bottom side
+        pvertices.Add(new Vertex(0f, 0f, (float) -NewC, 1f)); //27  == horizontal + 2
+        for (int i = 0; i < Horizontal; ++i)
         {
-            int shiftOnParralel = 1 + i * accuracyVertical;
-            for (int j = 0; j < accuracyVertical - 1; ++j)
-            {
-                ppolygons.Add(new Polygon(new List<Vertex>{
-                    pvertices[shiftOnParralel + j], 
-                    pvertices[shiftOnParralel + j + 1], 
-                    pvertices[shiftOnParralel + accuracyVertical + j + 1], 
-                    pvertices[shiftOnParralel + accuracyVertical + j]}));
-            }
-            ppolygons.Add(new Polygon(new List<Vertex>{
-                pvertices[shiftOnParralel + accuracyVertical - 1], 
-                pvertices[shiftOnParralel], 
-                pvertices[shiftOnParralel + accuracyVertical], 
-                pvertices[shiftOnParralel + accuracyVertical + accuracyVertical - 1]}));
-        }
-            
-        for (int i = pvertices.Count - accuracyVertical - 1; i < pvertices.Count - 2; ++i) //upper side
+            double phi = i * 2 * Math.PI / Horizontal;
+            pvertices.Add(new Vertex(
+                (float) (ArgA * Math.Cos(phi)),
+                (float) (ArgB * Math.Sin(phi)),
+                (float) (-NewC), 
+                1f
+            ));
+        } // Horizontal * 2 elements == 52
+        for (int i = Horizontal + 2; i < 2 * Horizontal + 1; ++i)  /// +2 = 0
         {
-            ppolygons.Add(new Polygon(new List<Vertex>
+            ppolygons.Add(new Polygon(new List<Vertex>()
             {
-                pvertices[pvertices.Count - 1],
-                pvertices[i],
-                pvertices[i + 1]
+                pvertices[Horizontal + 1],
+                pvertices[i + 1],
+                pvertices[i]
             }));
         }
-            
-        ppolygons.Add(new Polygon(new List<Vertex> //last part
+        
+        ppolygons.Add(new Polygon(new List<Vertex>()
         {
-            pvertices[pvertices.Count - 1],
-            pvertices[pvertices.Count - 2],
-            pvertices[pvertices.Count - accuracyVertical - 1]
+            pvertices[Horizontal + 1],
+            pvertices[Horizontal + 2],
+            pvertices[2 * Horizontal]
         }));
+        */
+        // side
+        int empty = 0;
+        for (int j = 0; j < Vertical; ++j)
+        {
+            double theta = j * Math.PI / Vertical;
+            if(Math.Abs(Math.Cos(theta)) < Parameter_h)
+            {
+                empty++;
+            }
+        }
+        
+        string res = "";
+        for (int i = 0; i < Horizontal; ++i)
+        {
+            double phi = i * 2 * Math.PI / Horizontal;
+            for (int j = 0; j < Vertical; ++j)
+            {
+                double theta = j * Math.PI / (Vertical);
+                if(Math.Abs(Math.Cos(theta)) < Parameter_h)
+                {
+                    pvertices.Add(new Vertex(
+                        (float) (ArgA * Math.Sin(theta) * Math.Cos(phi)),
+                        (float) (ArgB * Math.Sin(theta) * Math.Sin(phi)),
+                        (float) (NewC * Math.Cos(theta)),
+                        1f));
+                }
+            }
+            // res += empty.ToString() + " ";
+        }
+        // MessageBox.Show(res);
+        // empty - number of skips on each vert, empty/2 - number of skips for upper of bottom side
+        
+        for (int i = 0; i < Horizontal; ++i)
+        { //going through the all lines
+            int addition = Vertical - empty;
+            int delta = i * addition; // movement parameter
+            for (int j = 0; j < addition - 1; ++j)
+            {
+                //moving down the vertical line
+                ppolygons.Add(new Polygon(new List<Vertex>()
+                {
+                    pvertices[delta + j],
+                    pvertices[delta + j + 1],
+                    pvertices[delta + addition + j]
+                }));
+                ppolygons.Add(new Polygon(new List<Vertex>()
+                {
+                    pvertices[delta + j + 1],
+                    pvertices[delta + addition + j],
+                    pvertices[delta + addition + j + 1]
+                }));
+            }
+            
+            ppolygons.Add(new Polygon(new List<Vertex>{
+                pvertices[delta + addition - 1], 
+                pvertices[delta], 
+                pvertices[delta + addition], 
+                pvertices[delta + 2 * addition - 1]}));
+        }
     }
     public DMatrix4 NormalVecTransf(DMatrix4 matrix) { //doesn't want to work from the Math class????????
         return new DMatrix4(
