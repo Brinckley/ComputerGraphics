@@ -18,6 +18,7 @@ uniform float timer;
 void main()
 {
     // Animation
+    // Shader effect
     // Color change according to the sinusoidal law
     float p1 = 0.5f;
     float p2 = 0.5f;
