@@ -61,8 +61,8 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
     [DisplayNumericProperty(Default: 120, Increment: 1, Name: "c", Minimum: 1)]
     public int ArgC { get; set; }
     
-    [DisplayNumericProperty(Default: 0.8, Increment: 0.1, Name: "r", Minimum: 0.1)]
-    public int ArgR { get; set; }
+    [DisplayNumericProperty(Default: 0.8f, Increment: 0.05f, Name: "h", Minimum: 0.7f, 0.95f)]
+    public double ArgH { get; set; }
 
     [DisplayNumericProperty(
         Default: new[] { 0d, 0d, 0d }, 
@@ -279,7 +279,7 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
         // (1 - K) * pi <= theta <= K * pi    0 <= phi < 2pi
         // that means: theta is for vertical lines, phi - for horizontal (we draw a circle as a 2pi angle)
 
-        double k = 0.8f;
+        double k = ArgH;
 
         double phi = 2 * Math.PI / Horizontal;
         double theta = Math.PI / Vertical;
@@ -288,7 +288,8 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
         double stheta = 0;
 
         int counter = 0;
-
+        pvertices = new List<Vertex>();
+        ppolygons = new List<Polygon>();
         pvertices.Add(new Vertex(0f, 0f, (float)(ArgC * k), 1f));
         while (sphi < 2 * Math.PI)
         {
@@ -602,15 +603,27 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
         Point_Transform = DMatrix4.Identity; 
         Normal_Transform = DMatrix4.Identity;
         Global_Offset = new DVector3((MainWindow.Width - VSPanelWidth) / 2, MainWindow.Height / 2, MainWindow.Height / 2);
-        
+        OldPar = new DVector3(ArgA, ArgB, ArgC);
+        OlOr = new DVector2(Horizontal, Vertical);
         GenerateEllipsoid();
         SquaresToTrinagles();
     }
 
     private DVector4 LightPosition4;
-    
+
+    private DVector3 OldPar;
+    private DVector2 OlOr;
+    private double OldH;
     protected override void OnDeviceUpdate(object s, DeviceArgs e)
     {
+        if (OldPar.X != ArgA || OldPar.Y != ArgB || OldPar.Z != ArgC || OlOr.X != Horizontal || OlOr.Y != Vertical || OldH != ArgH)
+        {
+            OldPar = new DVector3(ArgA, ArgB, ArgC);
+            OlOr = new DVector2(Horizontal, Vertical);
+            OldH = ArgH;
+            GenerateEllipsoid();
+            SquaresToTrinagles();
+        }
         Global_Offset = new DVector3((MainWindow.Width - VSPanelWidth) / 2, MainWindow.Height / 2, MainWindow.Height / 2);
         Transformation(); 
         LightPosition4 = new DVector4(LightPosition.X, LightPosition.Y, LightPosition.Z, 1);
