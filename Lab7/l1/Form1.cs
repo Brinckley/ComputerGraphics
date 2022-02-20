@@ -12,57 +12,48 @@ namespace Lab7
 {
     public partial class Form1 : Form
     {
-        double dx, dy, scl, rot;
-        Font font;
+        private double dx;
+        private double dy;
+        private double scale;
+        private double rotation;
 
         NURBS nurbs;
 
         public Form1()
         {
             InitializeComponent();
-            picture.MouseWheel += Picture_MouseWheel;
 
-            dx = dy = rot = 0;
-            scl = 1;
-
-            font = new Font("Arial", 12);
+            dx = dy = 0;
+            rotation = 0;
+            scale = 1;
 
             nurbs = new NURBS();
+            
+            picture.MouseWheel += Picture_MouseWheel;
         }
 
         private void picture_Paint(object sender, PaintEventArgs e)
         {
-            double hw = e.ClipRectangle.Width * 0.5;
-            double hh = e.ClipRectangle.Height * 0.5;
-            double sz = scl * Math.Min(hw, hh);
+            double pictureWidth = e.ClipRectangle.Width / 2; // setting basic parameters
+            double pictureHeight = e.ClipRectangle.Height / 2;
+            double size = scale * Math.Min(pictureWidth, pictureHeight); // picture size start
 
             Matrix transform =
-                Matrix.D(hw, hh, 0) *
-                Matrix.D(dx, dy, 0) *
-                Matrix.S(sz, -sz, -1) *
-                Matrix.R(rot, new Matrix(0, 0, 1));
+                Matrix.D(pictureWidth, pictureHeight, 0) * // translation matrix
+                Matrix.D(dx, dy, 0) * // translation matrix
+                Matrix.S(size, -size, -1) * // scale matrix
+                Matrix.R(rotation, new Matrix(0, 0, 1)); // rotation matrix
 
+            // axis drawing
             int axis = 100;
             e.Graphics.DrawLine(Pens.Red, transform * new Matrix(-axis, 0, 0), transform * new Matrix(axis, 0, 0));
-            e.Graphics.DrawLine(Pens.Lime, transform * new Matrix(0, -axis, 0), transform * new Matrix(0, axis, 0));
+            e.Graphics.DrawLine(Pens.Red, transform * new Matrix(0, -axis, 0), transform * new Matrix(0, axis, 0));
 
-            for (int i = -axis + 1; i < axis; i++)
-            {
-                if (i == 0) continue;
-
-                double dash = 0.05;
-                e.Graphics.DrawLine(Pens.Red, transform * new Matrix(i, dash, 0), transform * new Matrix(i, -dash, 0));
-                e.Graphics.DrawLine(Pens.Lime, transform * new Matrix(dash, i, 0), transform * new Matrix(-dash, i, 0));
-
-                e.Graphics.DrawString(i.ToString(), font, Brushes.Red, transform * new Matrix(i, 0, 0));
-                e.Graphics.DrawString(i.ToString(), font, Brushes.Lime, transform * new Matrix(0, i, 0));
-            }
-            e.Graphics.DrawString("0", font, Brushes.Black, transform * new Matrix(0, 0, 0));
-
-            nurbs.Draw(e.Graphics, transform, font);
+            nurbs.DrawNURB(e.Graphics, transform);
         }
 
-        private int drag = 0;
+        // for mouse worker
+        private int drag = 0; // drag flag
         private int x = 0;
         private int y = 0;
         
@@ -93,7 +84,7 @@ namespace Lab7
             }
             else if (drag == 2)
             {
-                rot += -0.01f * (e.X - x);
+                rotation += -0.01f * (e.X - x);
                 x = e.X;
                 picture.Refresh();
             }
@@ -106,8 +97,8 @@ namespace Lab7
 
         private void Picture_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (e.Delta > 0) scl *= 1.25;
-            else scl *= 0.8;
+            if (e.Delta > 0) scale *= 1.25;
+            else scale *= 0.75;
             picture.Refresh();
         }
 
@@ -118,6 +109,7 @@ namespace Lab7
 
         private void UpdateMesh(object sender, EventArgs e)
         {
+            // x    y    weight
             nurbs.nodes[0].values[0, 0] = (double)valueax.Value;
             nurbs.nodes[0].values[1, 0] = (double)valueay.Value;
             nurbs.nodes[0].values[2, 0] = (double)valueaw.Value;
