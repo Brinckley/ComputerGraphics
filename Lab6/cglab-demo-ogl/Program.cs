@@ -23,7 +23,7 @@ public abstract class CGLabDemoOGL : OGLApplicationTemplate<CGLabDemoOGL>
 
     #region Свойства
 
-    public double Parameter_Height = 100; // высота эллипсоида
+    public double Parameter_Height = 100; 
 
     [DisplayNumericProperty(new[] { 1d, 1d, 1d }, 0.01, "Object Color", 0, 1)]
     public DVector3 ObjectColor { get; set; }

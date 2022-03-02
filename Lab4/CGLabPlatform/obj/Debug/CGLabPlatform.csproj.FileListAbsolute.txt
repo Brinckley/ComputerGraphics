@@ -76,3 +76,9 @@ D:\CompGraph\NewLabs\l4\CGLabPlatform\obj\Debug\CGLabPlatform.csprojAssemblyRefe
 D:\CompGraph\NewLabs\l4\CGLabPlatform\obj\Debug\CGLabPlatform.csproj.CoreCompileInputs.cache
 D:\CompGraph\NewLabs\l4\CGLabPlatform\obj\Debug\CGLabPlatform.dll
 D:\CompGraph\NewLabs\l4\CGLabPlatform\obj\Debug\CGLabPlatform.pdb
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\bin\Debug\CGLabPlatform.dll
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\bin\Debug\CGLabPlatform.pdb
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\obj\Debug\CGLabPlatform.csprojAssemblyReference.cache
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\obj\Debug\CGLabPlatform.csproj.CoreCompileInputs.cache
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\obj\Debug\CGLabPlatform.dll
+D:\github\ComputerGraphics\Lab4\CGLabPlatform\obj\Debug\CGLabPlatform.pdb

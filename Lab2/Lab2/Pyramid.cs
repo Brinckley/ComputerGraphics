@@ -85,6 +85,7 @@ public class Vertex
     #endregion
     class Pyramid
     {
+        public bool Grid = false;
 
         public List<Vertex> pvertices; //all vertices 
         public List<Polygon> ppolygons; //all polygons
@@ -318,8 +319,12 @@ public class Vertex
                         (float) p.vertices[i].Point_InGlobalSpace.Y));
                 }
 
+                if (!Grid)
+                {
+                    e.Graphics.FillPolygon(new SolidBrush(p.Color), pointFs.ToArray()); //filling with color 
+                }
                 e.Graphics.DrawPolygon(new Pen(Color.Black), pointFs.ToArray()); //drawing borders
-                e.Graphics.FillPolygon(new SolidBrush(p.Color), pointFs.ToArray()); //filling with color 
+                
             }
         }
     }

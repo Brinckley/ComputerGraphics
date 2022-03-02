@@ -24,17 +24,6 @@ using View = System.Windows.Forms.View;
 
 public abstract class Main : CGApplicationTemplate<CGApplication, Device, DeviceArgs>
 {
-    enum Operations
-    {
-        None,
-        Parameters, 
-        Scale,
-        Rotation,
-        Translation
-    }
-
-    private Operations operation = Operations.None;
-    
     #region Orientation
 
     [DisplayNumericProperty(Default: 25, Increment: 1, Name: "Horizontal approximation", Minimum: 5)]
@@ -160,14 +149,6 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
     )]
     public DVector3 LightPosition { get; set; } //light source coordinates 
     
-    [DisplayNumericProperty(
-        Default: new[] { 0.10d, 0.35d }, 
-        Increment: 0.01, 
-        Name: "Md Mk", 
-        Minimum: 0,
-        Maximum: 1
-    )]
-    public DVector2 MdMkVector2 { get; set; }
     #endregion
 
     /////////////////////////////////////////////////////////////////
@@ -313,6 +294,7 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
 
         ppolygons = new List<Polygon>();
         
+        // only triangle polygons!
         // side-----------------------------------------------------
         int shift = 0;
         int delta = 0;
@@ -414,32 +396,7 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
             matrix.M11 * matrix.M22 - matrix.M21 * matrix.M12, 0,
             0,   0,   0,   0);
     }
-    public void SquaresToTrinagles()
-    {
-        for (int i = 0; i < ppolygons.Count; ++i)
-        {
-            if (ppolygons[i].vertices.Count == 4)
-            {
-                //separating square polygon into two triangles for better usage later in lighting calculating
-                Polygon polygon1 = new Polygon(new List<Vertex>
-                {
-                    ppolygons[i].vertices[0], ppolygons[i].vertices[1], ppolygons[i].vertices[2]
-                });
-                polygon1.Color_PolygonLight = ppolygons[i].Color_PolygonLight;
-                    
-                Polygon polygon2 = new Polygon(
-                    new List<Vertex>
-                    {
-                        ppolygons[i].vertices[2], ppolygons[i].vertices[3], ppolygons[i].vertices[0]
-                    });
-                polygon2.Color_PolygonLight = ppolygons[i].Color_PolygonLight;
-                    
-                ppolygons.RemoveAt(i);
-                ppolygons.Insert(i, polygon2);
-                ppolygons.Insert(i, polygon1);
-            }
-        }
-    }
+    
     public void Transformation()
     {
         double globalScaleX = 1;
@@ -477,6 +434,7 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
             
         //Normal_Transform = DMatrix4.Identity;
         Normal_Transform = NormalVecTransf(Point_Transform);
+        LightPosition4 = Point_Transform * LightPosition4; // light addition
     }
     
     
@@ -488,9 +446,18 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
     private double Parameter_K = 0.3d; //additional parameter for the Specular formula
     private DVector3 ColorLightMaterial; //field to exchange info about intensity worker result
 
-    public void IntensityWorker(DVector4 vertex, DVector4 normal)
+    public void IntensityWorker(Polygon p)
     {
-        //MessageBox.Show(vertex.Point_InGlobalSpace.X + " " + vertex.Point_InGlobalSpace.Y + " " + vertex.Point_InGlobalSpace.Z);
+        double x = 0, y = 0, z = 0;
+        for (int i = 0; i < p.vertices.Count; ++i)
+        {
+            x += p.vertices[i].Point_InGlobalSpace.X;
+            y += p.vertices[i].Point_InGlobalSpace.Y;
+            z += p.vertices[i].Point_InGlobalSpace.Z;
+        } //calculating center of the triangle polygon
+        DVector4 vertex = new DVector4(x / 3, y / 3, z / 3, 1f);
+        
+        DVector4 normal = p.Normal_InGlobalSpace;
         
         DVector4 L = new DVector4( //vector from point to lighter
             LightPosition4.X - vertex.X,
@@ -546,34 +513,6 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
         ColorLightMaterial.Z = ambientVector3.Z + diffuseVector3.Z + specularVector3.Z;
     }
 
-    public void LightWorker()
-    {
-        foreach (var p in ppolygons)
-        {
-            if (!p.IsVisible) continue;
-            
-            double x = 0, y = 0, z = 0;
-            for (int i = 0; i < p.vertices.Count; ++i)
-            {
-                x += p.vertices[i].Point_InGlobalSpace.X;
-                y += p.vertices[i].Point_InGlobalSpace.Y;
-                z += p.vertices[i].Point_InGlobalSpace.Z;
-            }
-            x /= 3;
-            y /= 3;
-            z /= 3; //calculating center of the triangle polygon
-            
-            //MessageBox.Show("After /3");
-            IntensityWorker(new DVector4(x, y, z, 1), p.Normal_InGlobalSpace);
-            
-            p.Color_PolygonLight = Color.FromArgb(
-                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.X * ColorLightMaterial.X)), 
-                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.Y * ColorLightMaterial.Y)),
-                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.Z * ColorLightMaterial.Z)));
-            
-        }
-    }
-
     protected override void OnMainWindowLoad(object sender, EventArgs args)
     {
         base.RenderDevice.BufferBackCol = 0x20;
@@ -606,7 +545,6 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
         OldPar = new DVector3(ArgA, ArgB, ArgC);
         OlOr = new DVector2(Horizontal, Vertical);
         GenerateEllipsoid();
-        SquaresToTrinagles();
     }
 
     private DVector4 LightPosition4;
@@ -622,23 +560,14 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
             OlOr = new DVector2(Horizontal, Vertical);
             OldH = ArgH;
             GenerateEllipsoid();
-            SquaresToTrinagles();
         }
         Global_Offset = new DVector3((MainWindow.Width - VSPanelWidth) / 2, MainWindow.Height / 2, MainWindow.Height / 2);
-        Transformation(); 
         LightPosition4 = new DVector4(LightPosition.X, LightPosition.Y, LightPosition.Z, 1);
-        LightPosition4 = Point_Transform * LightPosition4;
+        Transformation();
 
         foreach (var v in pvertices) //transform every point
         {
             v.Point_InGlobalSpace = Point_Transform * v.Point_InLocalSpace;
-            DVector4 L = new DVector4( //vector from point to lighter
-                LightPosition4.X - v.Point_InGlobalSpace.X,
-                LightPosition4.Y - v.Point_InGlobalSpace.Y,
-                LightPosition4.Z - v.Point_InGlobalSpace.Z,
-                0);//it's vector => w = 0
-            double d = L.GetLength(); //distance to the lighter4
-            //MessageBox.Show(" " + d);
         }
         
         foreach (var p in ppolygons) //transform every normal + visibility check
@@ -648,17 +577,24 @@ public abstract class Main : CGApplicationTemplate<CGApplication, Device, Device
             //if normal is more than zero we need to draw the polygon
             p.IsVisible = p.Normal_InGlobalSpace.Z > 0;
         }
-        LightWorker();
         
-       // ppolygons.OrderBy(p => Math.Min(p.vertices[0].Point_InGlobalSpace.Z, 
-       //     Math.Min(p.vertices[1].Point_InGlobalSpace.Z, p.vertices[2].Point_InGlobalSpace.Z)));
-       ppolygons.OrderBy(p => p.Normal_InGlobalSpace.Z);
+        foreach (var p in ppolygons)
+        {
+            if (!p.IsVisible) continue;
+            
+            IntensityWorker(p);
+            
+            p.Color_PolygonLight = Color.FromArgb(
+                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.X * ColorLightMaterial.X)), 
+                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.Y * ColorLightMaterial.Y)),
+                (int)Math.Max(0, Math.Min(255, 255 * ColorVector3.Z * ColorLightMaterial.Z)));
+            
+        }
+        ppolygons.OrderBy(p => p.Normal_InGlobalSpace.Z);
 
         foreach (var p in ppolygons)  
         {
             if (!p.IsVisible) continue;
-            //MessageBox.Show("Z: " + p.Normal_InGlobalSpace.Z);
-            //MessageBox.Show("" + ColorVector3.X + " " + ColorVector3.Y + " " + ColorVector3.Z);
             e.Surface.DrawTriangle(
                 p.Color_PolygonLight.ToArgb(),
                 p.vertices[0].Point_InGlobalSpace.X, p.vertices[0].Point_InGlobalSpace.Y,

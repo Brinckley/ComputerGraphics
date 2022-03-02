@@ -199,3 +199,13 @@ D:\CompGraph\NewLabs\l4\cglab-demo-ogl\obj\Debug\cglab-demo-ogl.csproj.CoreCompi
 D:\CompGraph\NewLabs\l4\cglab-demo-ogl\obj\Debug\cglab-demo-ogl.csproj.CopyComplete
 D:\CompGraph\NewLabs\l4\cglab-demo-ogl\obj\Debug\cglab45-ogl3d.exe
 D:\CompGraph\NewLabs\l4\cglab-demo-ogl\obj\Debug\cglab45-ogl3d.pdb
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\bin\Debug\cglab45-ogl3d.exe.config
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\bin\Debug\cglab45-ogl3d.exe
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\bin\Debug\cglab45-ogl3d.pdb
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\bin\Debug\CGLabPlatform.dll
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\bin\Debug\CGLabPlatform.pdb
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\obj\Debug\cglab-demo-ogl.csprojAssemblyReference.cache
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\obj\Debug\cglab-demo-ogl.csproj.CoreCompileInputs.cache
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\obj\Debug\cglab-demo-ogl.csproj.CopyComplete
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\obj\Debug\cglab45-ogl3d.exe
+D:\github\ComputerGraphics\Lab4\cglab-demo-ogl\obj\Debug\cglab45-ogl3d.pdb

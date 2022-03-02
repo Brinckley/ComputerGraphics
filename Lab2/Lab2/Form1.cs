@@ -406,5 +406,18 @@ namespace Lab2
         }
         
         #endregion
+        
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                pyramid.Grid = true;
+            }
+            else
+            {
+                pyramid.Grid = false;
+            }
+            pictureBox1.Refresh();
+        }
     }
 }

@@ -43,7 +43,7 @@ public abstract class CGLabDemoOGL : OGLApplicationTemplate<CGLabDemoOGL>
         set { if (Set(value)) UpdateModelViewMatrix(); }
     }
 
-    [DisplayNumericProperty(500d, 0.1, 2, "Camera distance")]
+    [DisplayNumericProperty(300d, 0.1, 2, "Camera distance")]
     public virtual double Distance
     {
         get { return Get<double>(); }

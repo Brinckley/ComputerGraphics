@@ -66,6 +66,7 @@
             this.numeric23 = new System.Windows.Forms.NumericUpDown();
             this.numeric13 = new System.Windows.Forms.NumericUpDown();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize) (this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -111,6 +112,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox1);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.NumericTranslationZ);
             this.splitContainer1.Panel2.Controls.Add(this.NumericTranslationY);
@@ -562,6 +564,16 @@
             this.toolStripButton1.Size = new System.Drawing.Size(23, 23);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.Location = new System.Drawing.Point(19, 500);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(104, 24);
+            this.checkBox1.TabIndex = 43;
+            this.checkBox1.Text = "Grid";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -603,6 +615,8 @@
             ((System.ComponentModel.ISupportInitialize) (this.numeric13)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.CheckBox checkBox1;
 
         private System.Windows.Forms.NumericUpDown NumericTranslationX;
 
